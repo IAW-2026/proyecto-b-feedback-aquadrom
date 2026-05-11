@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { SignInButton, UserButton, Show } from '@clerk/nextjs';
+import Image from 'next/image';
 
 export default function Navbar() {
   return (
@@ -11,8 +12,21 @@ export default function Navbar() {
           
           {/* Logo / Título */}
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-headline font-bold tracking-tight text-primary">
-              AguaYa <span className="text-slate-900">Feedback</span>
+            <Link 
+              href="/" 
+              className="flex items-center gap-2 text-xl font-headline font-bold tracking-tight text-primary"
+            >
+              {/* Uso la imagen del logo, luego cambiarla por una de mejor calidad  */}
+              <Image 
+                src="/gotasinfondo.png" 
+                alt="Logo AguaYa" 
+                width={80}
+                height={120} 
+                className="object-fill"
+              />
+              <span>
+                AguaYa <span className="text-[#007aff]">Feedback</span>
+              </span>
             </Link>
           </div>
 

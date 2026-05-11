@@ -1,4 +1,3 @@
-// src/app/page.tsx
 import Image from "next/image";
 import { Search, Truck, Recycle, CreditCard, HelpCircle, ChevronDown, Droplets } from "lucide-react";
 
@@ -7,7 +6,7 @@ export default function Home() {
     <div className="space-y-16">
       {/* Hero Search Section  */}
       <section className="mt-8 text-center space-y-6">
-        <h1 className="font-headline text-headline-lg text-slate-900">
+        <h1 className="font-headline text-5xl text-slate-900">
           ¿Cómo podemos ayudarte? 
         </h1>
         <div className="max-w-2xl mx-auto relative group">
