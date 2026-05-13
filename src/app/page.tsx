@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Search, Truck, Recycle, CreditCard, HelpCircle, ChevronDown, Droplets } from "lucide-react";
+import { Search, Truck, Recycle, CreditCard, HelpCircle, ChevronDown, Droplets, Star, MessageSquareText, CircleQuestionMark } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -23,86 +24,86 @@ export default function Home() {
 
       {/* Category Grid */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 flex flex-col items-center text-center space-y-4 cursor-pointer group">
-          <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-            <Truck className="text-3xl" />
+        <Link href="/faqs" className="block">
+        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 hover:border-[#005BC1]/30 flex flex-col items-center text-center space-y-4 cursor-pointer group">
+          <div className="w-14 h-14 rounded-full bg-[#005BC1]/10 flex items-center justify-center text-[#005BC1] group-hover:scale-110 group-hover:bg-[#005BC1] group-hover:text-white transition-all duration-300">
+            <CircleQuestionMark className="text-3xl" />
           </div>
-          <h3 className="font-headline text-xl font-bold">Pedidos y Entregas</h3>
-          <p className="text-sm text-slate-500">Rastreo de envíos, horarios de entrega y modificaciones de pedido.</p>
-        </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 flex flex-col items-center text-center space-y-4 cursor-pointer group">
-          <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
-            <Recycle className="text-3xl" />
+
+          <div className="space-y-1">
+            <h3 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
+              Preguntas Frecuentes
+            </h3>
+            <p className="text-sm text-slate-500 font-body leading-relaxed">
+              Guía de ayuda rápida sobre el uso de la app y detalles del servicio.
+            </p>
           </div>
-          <h3 className="font-headline text-xl font-bold">Gestión de Bidones</h3>
-          <p className="text-sm text-slate-500">Devolución, recolección y mantenimiento de bidones de agua.</p>
+        </div>  
+        </Link>
+        
+      <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 hover:border-[#005BC1]/30 flex flex-col items-center text-center space-y-4 cursor-pointer group">
+        <div className="w-14 h-14 rounded-full bg-[#005BC1]/10 flex items-center justify-center text-[#005BC1] group-hover:scale-110 group-hover:bg-[#005BC1] group-hover:text-white transition-all duration-300">
+          <MessageSquareText className="text-3xl" />
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 flex flex-col items-center text-center space-y-4 cursor-pointer group">
-          <div className="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
-            <CreditCard className="text-3xl" />
-          </div>
-          <h3 className="font-headline text-xl font-bold">Pagos</h3>
-          <p className="text-sm text-slate-500">Métodos de pago, facturación y gestión de suscripciones.</p>
+        <div className="space-y-1">
+          <h3 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
+            Reseñas
+          </h3>
+          <p className="text-sm text-slate-500 font-body leading-relaxed">
+            Comparte tu experiencia con nuestros servicios y proveedores.
+          </p>
         </div>
+      </div>
+
+       <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 hover:border-[#005BC1]/30 flex flex-col items-center text-center space-y-4 cursor-pointer group">
+        <div className="w-14 h-14 rounded-full bg-[#005BC1]/10 flex items-center justify-center text-[#005BC1] group-hover:scale-110 group-hover:bg-[#005BC1] group-hover:text-white transition-all duration-300">
+          <Star className="text-3xl" />
+        </div>
+        <div className="space-y-1">
+          <h3 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
+            Valóranos
+          </h3>
+          <p className="text-sm text-slate-500 font-body leading-relaxed">
+            Tu feedback es la herramienta principal para mejorar nuestro servicio.
+          </p>
+        </div>
+      </div> 
+
       </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* FAQ Section*/}
-        <section className="lg:col-span-7 space-y-6">
-          <h2 className="font-headline text-2xl font-bold flex items-center gap-2">
-            <HelpCircle className="text-primary" />
-            Preguntas Frecuentes
-          </h2>
-          <div className="space-y-3">
-            {[
-              "¿Cómo devuelvo mis bidones vacíos?",
-              "¿Puedo programar una entrega recurrente?",
-              "¿Cuáles son los métodos de pago aceptados?",
-              "¿Cómo cancelo o modifico mi pedido?",
-              "¿Qué hago si mi bidón llega dañado?"
-            ].map((faq, i) => (
-              <div key={i} className="bg-white rounded-lg border border-slate-100 overflow-hidden">
-                <button className="w-full flex justify-between items-center p-4 hover:bg-slate-50 transition-colors">
-                  <span className="font-semibold text-slate-700">{faq}</span>
-                  <ChevronDown className="text-slate-400" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
 
-        {/* Feedback Aside*/}
-        <aside className="lg:col-span-5 space-y-6">
-          <div className="bg-primary text-slate-900 p-6 rounded-xl shadow-lg relative overflow-hidden group">
-            <div className="relative z-10 space-y-4">
-              <h3 className="font-headline text-xl font-bold">Tu opinión nos refresca</h3>
-              <p className="text-sm opacity-90">Ayúdanos a mejorar nuestro servicio de entrega y calidad del agua.</p>
-              <button className="text-slate-900 text-primary px-6 py-2 rounded-full font-bold hover:bg-blue-50 transition-colors">
-                Dejar una Reseña 
-              </button>
-            </div>
-          </div>
-          
-          {/* Pedidos por calificar  */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 space-y-4">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Pedidos por calificar </h3>
-            <div className="flex items-center justify-between gap-4 pb-4 border-b border-slate-50">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-slate-50 rounded-lg flex items-center justify-center">
-                  <Droplets className="text-slate-400" />
-                </div>
-                <div>
-                  <p className="font-bold text-slate-700">Pedido #8821</p>
-                  <p className="text-xs text-slate-400">Entregado ayer</p>
-                </div>
-              </div>
-              <button className="text-primary font-bold text-sm border border-blue-100 px-4 py-1 rounded-lg hover:bg-blue-50">
-                Calificar
-              </button>
-            </div>
-          </div>
-        </aside>
+      
+  <section className="group relative h-[400px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/20 transition-all duration-500 hover:shadow-primary/20">
+  <Image
+    src="/aguaya-bidones-component.png"
+    alt="Aguaya bidones"
+    fill
+    priority
+    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+  />
+
+  <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/40 to-transparent">
+    <div className="flex h-full flex-col justify-center max-w-2xl px-8 md:px-16 space-y-6">
+      
+
+
+      <h2 className="text-4xl md:text-6xl font-headline font-bold leading-[1.1] text-white drop-shadow-md">
+        Comprometidos con tu <span className="text-[#007aff]">bienestar</span>
+      </h2>
+
+      <p className="text-lg md:text-xl font-body text-slate-200 opacity-90 max-w-lg leading-relaxed">
+        Agua pura, logística eficiente y atención personalizada. Elevamos el estándar de hidratación en cada entrega.
+      </p>
+
+      {/* Botón de Acción (Call to Action) para linkear despues a about us*/}
+      <div className="pt-4">
+        <button className="bg-[#007aff] hover:bg-[#0058bc] text-white px-8 py-4 rounded-xl font-bold transition-all transform hover:-translate-y-1 active:scale-95 shadow-lg shadow-blue-500/30">
+          Conocer más
+        </button>
       </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 }

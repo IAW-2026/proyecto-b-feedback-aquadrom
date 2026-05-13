@@ -20,8 +20,8 @@ export default function Navbar() {
               <Image 
                 src="/gotasinfondo.png" 
                 alt="Logo AguaYa" 
-                width={80}
-                height={120} 
+                width={38}
+                height={78} 
                 className="object-fill"
               />
               <span>
