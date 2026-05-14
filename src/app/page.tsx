@@ -55,6 +55,7 @@ export default function Home() {
         </div>
       </div>
 
+      <Link href="/value-us" className="block">
        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 hover:border-[#005BC1]/30 flex flex-col items-center text-center space-y-4 cursor-pointer group">
         <div className="w-14 h-14 rounded-full bg-[#005BC1]/10 flex items-center justify-center text-[#005BC1] group-hover:scale-110 group-hover:bg-[#005BC1] group-hover:text-white transition-all duration-300">
           <Star className="text-3xl" />
@@ -68,7 +69,7 @@ export default function Home() {
           </p>
         </div>
       </div> 
-
+      </Link>
       </section>
 
 
