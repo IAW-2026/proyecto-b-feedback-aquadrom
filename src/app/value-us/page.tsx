@@ -6,10 +6,11 @@ import {
   Star, 
   Send, 
   CheckCheck, 
-  User, 
-  Droplets, 
+  Monitor, 
+  Zap, 
   Smartphone, 
-  CircleDollarSign 
+  Bug,
+  Lightbulb 
 } from 'lucide-react';
 
 // Sub-componente para las etiquetas de logística
@@ -36,11 +37,11 @@ export default function ValoranosPage() {
   const [comment, setComment] = useState('');
 
   const tags = [
-    { id: 'rapidez', label: 'Rapidez de entrega', icon: CheckCheck },
-    { id: 'atencion', label: 'Atención del repartidor', icon: User },
-    { id: 'calidad', label: 'Calidad del agua', icon: Droplets },
-    { id: 'app', label: 'Facilidad de la app', icon: Smartphone },
-    { id: 'precio', label: 'Precios justos', icon: CircleDollarSign },
+    { id: 'interfaz', label: 'Interfaz (UI)', icon: Monitor }, 
+    { id: 'fluidez', label: 'Fluidez/Velocidad', icon: Zap }, 
+    { id: 'facilidad', label: 'Facilidad de uso', icon: Smartphone },
+    { id: 'errores', label: 'Reportar un error', icon: Bug },
+    { id: 'sugerencia', label: 'Nueva funcionalidad', icon: Lightbulb },
   ];
 
   const toggleTag = (id: string) => {
