@@ -15,7 +15,7 @@ export default function Home() {
             <Search className="text-primary text-2xl" />
           </div>
           <input 
-            className="w-full pl-[60px] pr-6 py-6 rounded-xl border-none bg-white shadow-md focus:ring-2 focus:ring-primary/20 transition-shadow text-lg"
+            className="w-full pl-15 pr-6 py-6 rounded-xl border-none bg-white shadow-md focus:ring-2 focus:ring-primary/20 transition-shadow text-lg"
             placeholder="Busca respuestas sobre proveedores, bidones o sobre la app..." // 
             type="text"
           />
@@ -73,7 +73,7 @@ export default function Home() {
 
 
       
-  <section className="group relative h-[400px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/20 transition-all duration-500 hover:shadow-primary/20">
+  <section className="group relative h-100 w-full rounded-3xl overflow-hidden shadow-2xl border border-white/20 transition-all duration-500 hover:shadow-primary/20">
   <Image
     src="/aguaya-bidones-component.png"
     alt="Aguaya bidones"
@@ -82,7 +82,7 @@ export default function Home() {
     className="object-cover transition-transform duration-700 group-hover:scale-105" 
   />
 
-  <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/40 to-transparent">
+  <div className="absolute inset-0 bg-linear-to-r from-slate-900/90 via-slate-900/40 to-transparent">
     <div className="flex h-full flex-col justify-center max-w-2xl px-8 md:px-16 space-y-6">
       
 
