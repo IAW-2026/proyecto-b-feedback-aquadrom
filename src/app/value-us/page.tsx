@@ -77,7 +77,7 @@ export default function ValoranosPage() {
                 src="/gotasinfondo.png" 
                 alt="AguaYa Feedback"
                 fill
-                className="object-contain opacity-20"
+                className="object-contain opacity-50"
                />
             </div>
           </div>

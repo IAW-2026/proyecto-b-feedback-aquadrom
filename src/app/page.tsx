@@ -98,9 +98,9 @@ export default function Home() {
 
       {/* Botón de Acción (Call to Action) para linkear despues a about us*/}
       <div className="pt-4">
-        <button className="bg-[#007aff] hover:bg-[#0058bc] text-white px-8 py-4 rounded-xl font-bold transition-all transform hover:-translate-y-1 active:scale-95 shadow-lg shadow-blue-500/30">
+        <Link href="/about-us" className="inline-flex bg-[#007aff] hover:bg-[#0058bc] text-white px-8 py-4 rounded-xl font-bold transition-all transform hover:-translate-y-1 active:scale-95 shadow-lg shadow-blue-500/30">
           Conocer más
-        </button>
+        </Link>
       </div>
     </div>
   </div>
