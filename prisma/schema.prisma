@@ -9,22 +9,25 @@ datasource db {
   // Nota: La URL ahora se gestiona desde prisma.config.ts usando env("DATABASE_URL")
 }
 
-model Valoracion {
-  id_valoracion Int      @id @default(autoincrement())
+model Resena {
+  id_resena Int      @id @default(autoincrement())
   id_pedido     String   // Referencia al pedido original en SellerApp 
   id_usuario    String   // El ID del Comprador (sub de Clerk) 
-  id_vendedor   String   // El ID del Vendedor calificado [cite: 97]
+  id_vendedor   String   // El ID del Vendedor calificado 
   estrellas     Int      // Calificación del 1 al 5 
   comentario    String?  @db.Text
-  foto          String?  // URL de la imagen (te conviene agregarlo por el Entregable 1.4) [cite: 53, 98]
+  foto          String?  // URL de la imagen (te conviene agregarlo por el Entregable 1.4) 
   fecha         DateTime @default(now())
 }
 
-model FAQ {
-  id_faq    Int      @id @default(autoincrement())
-  pregunta  String
-  respuesta String   @db.Text
-  categoria String   // Ej: "Pagos", "Entregas" 
+model Valoracion {
+  id_valoracion    Int      @id @default(autoincrement())
+  id_pedido        String
+  id_usuario       String
+  id_vendedor      String
+  comentario       String
+  estrellas        Int
+  fecha            DateTime @default(now())
 }
 
 model AdminFeedback {
