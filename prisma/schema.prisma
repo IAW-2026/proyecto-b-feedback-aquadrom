@@ -22,9 +22,7 @@ model Resena {
 
 model Valoracion {
   id_valoracion    Int      @id @default(autoincrement())
-  id_pedido        String
   id_usuario       String
-  id_vendedor      String
   comentario       String
   estrellas        Int
   fecha            DateTime @default(now())

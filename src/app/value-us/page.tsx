@@ -12,9 +12,11 @@ import {
   Bug,
   Lightbulb 
 } from 'lucide-react';
+import { createValoracion } from '../actions/valoraciones';
 
 // Sub-componente para las etiquetas de logística
 function FeedbackChip({ label, icon: Icon, active, onClick }: any) {
+
   return (
     <button
       onClick={onClick}
@@ -50,8 +52,36 @@ export default function ValoranosPage() {
     );
   };
 
+  const handleSave = async () => {
+  if (rating === 0) {
+    alert('Por favor selecciona una calificación');
+    return;
+  }
+
+  try {
+    const result = await createValoracion({
+      id_usuario: 'usuario_temp_456',
+      estrellas: rating,
+      comentario: comment,
+    });
+
+    if (!result.success) {
+      throw new Error(result.error || 'Error al guardar la valoración');
+    }
+
+    alert('Valoración guardada con éxito');
+    setRating(0);
+    setComment('');
+    setSelectedTags([]);
+  } catch (error) {
+    console.error(error);
+    alert('No se pudo guardar la valoración: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+  }
+};
+
   return (
     <main className="min-h-screen bg-[#E3F2FD]/30 pt-24 pb-12 px-4">
+
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Hero Section */}
@@ -149,6 +179,7 @@ export default function ValoranosPage() {
               <p className="text-xs">Su valoración será pública y anónima.</p>
             </div>
             <button 
+              onClick={handleSave}
               className="w-full md:w-auto bg-[#005BC1] hover:bg-[#004a9e] text-white px-10 py-4 rounded-xl font-bold flex items-center justify-center gap-3 shadow-lg shadow-[#005BC1]/20 transition-all active:scale-95"
             >
               Enviar Valoración
