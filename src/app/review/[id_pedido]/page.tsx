@@ -128,7 +128,7 @@ export default function CreateReviewPage() {
             </p>
           </section>
 
-      
+
 
           {/* Caja de Comentarios */}
           <section className="space-y-4">

@@ -1,19 +1,20 @@
-'use client';
-
+import { currentUser } from '@clerk/nextjs/server';
 import { 
-  Star, 
   Calendar, 
   Droplets, 
   ArrowRight, 
   ChevronDown, 
   AlertCircle, 
-  Award,
-  PackageCheck
+  Star,
+  PackageCheck,
+  Award
 } from 'lucide-react';
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { getResenasByUser } from '../actions/getResenas';
 
-// Sub-componente para las métricas del servicio 
+export const revalidate = 0; 
+
+// Sub-componente 
 function SummaryItem({ label, value, icon: Icon, colorClass, subtext }: any) {
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
@@ -31,7 +32,7 @@ function SummaryItem({ label, value, icon: Icon, colorClass, subtext }: any) {
   );
 }
 
-// Sub-componente para los pedidos individuales 
+// Sub-componente 
 function OrderReviewCard({ id, date, items, status, rating, pending }: any) {
   return (
     <div className={`bg-white p-5 rounded-2xl shadow-sm border-l-4 transition-all hover:shadow-md ${
@@ -91,20 +92,33 @@ function OrderReviewCard({ id, date, items, status, rating, pending }: any) {
   );
 }
 
-export default function ResenasPage() {
-  const { user } = useUser();
+export default async function ResenasPage() {
+  const user = await currentUser();
+  const resenasResult = await getResenasByUser();
+  const resenas = resenasResult.success && resenasResult.resenas ? resenasResult.resenas : [];
+
   const orders = [
-    { id: '12345', date: '18 de Mayo, 2024', items: '2x 20L Premium', status: 'Entregado', pending: true }, 
-    { id: '12312', date: '10 de Mayo, 2024', items: '1x 20L Premium', status: 'Completado', rating: 5, pending: false }, 
-    { id: '12290', date: '02 de Mayo, 2024', items: '3x 20L Premium', status: 'Completado', rating: 4, pending: false }, 
-    { id: '12275', date: '28 de Abril, 2024', items: '2x 20L Premium', status: 'Entregado', pending: true }, 
+    { id: '12345', date: '18 de Mayo, 2024', items: '2x 20L Premium', status: 'Entregado' }, 
+    { id: '12312', date: '10 de Mayo, 2024', items: '1x 20L Premium', status: 'Completado' }, 
+    { id: '12290', date: '02 de Mayo, 2024', items: '3x 20L Premium', status: 'Completado' }, 
+    { id: '12275', date: '28 de Abril, 2024', items: '2x 20L Premium', status: 'Entregado' }, 
   ];
+
+  const processedOrders = orders.map(order => {
+    const resena = resenas.find(r => r.id_pedido === order.id);
+    return {
+      ...order,
+      pending: !resena,
+      rating: resena?.estrellas
+    };
+  });
+
+  const pendingCount = processedOrders.filter(o => o.pending).length;
 
   return (
     <main className="min-h-screen bg-slate-50/50 pt-24 pb-16 px-4">
       <div className="max-w-6xl mx-auto space-y-10">
         
-        {/* Encabezado de la página */}
         <section className="space-y-2">
           <h1 className="text-3xl md:text-4xl font-headline font-bold text-slate-900">
             Pedidos de {user?.firstName || 'Usuario'}
@@ -116,40 +130,34 @@ export default function ResenasPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Resumen de Actividad  */}
           <aside className="lg:col-span-4 space-y-6">
             <div className="grid grid-cols-1 gap-6">
               <SummaryItem 
                 label="Pedidos Totales" 
-                value="24" 
+                value={orders.length}
                 icon={PackageCheck} 
                 colorClass="bg-blue-50 text-blue-600" 
-             
               />
               <SummaryItem 
                 label="Pendientes de Calificar" 
-                value="2" 
-                icon={AlertCircle} 
-                colorClass="bg-rose-50 text-rose-600"
-                subtext="Acción requerida" 
-              
+                value={pendingCount} 
+                icon={pendingCount === 0 ? Award : AlertCircle} 
+                colorClass={pendingCount === 0 ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"}
+                subtext={pendingCount === 0 ? "¡Todo al día!" : "Acción requerida"} 
               />
-             
             </div>
           </aside>
 
-          {/* Listado de Pedidos Recientes */}
           <section className="lg:col-span-8 space-y-4">
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">
               Historial de Entregas
             </h2>
             <div className="space-y-4">
-              {orders.map((order) => (
+              {processedOrders.map((order) => (
                 <OrderReviewCard key={order.id} {...order} />
               ))}
             </div>
 
-            {/* Paginación */}
             <div className="pt-8 flex justify-center">
               <button className="flex items-center gap-2 px-8 py-3 rounded-full bg-white border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-all">
                 Ver Pedidos Anteriores 
