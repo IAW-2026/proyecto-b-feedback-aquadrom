@@ -85,7 +85,7 @@ export default function CreateReviewPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 pt-24 pb-16 px-4">
-      <div className="max-w-[720px] mx-auto space-y-10">
+      <div className="max-w-180 mx-auto space-y-10">
         
         {/* Encabezado de Contexto */}
         <div className="text-center">
@@ -123,7 +123,7 @@ export default function CreateReviewPage() {
             <div className="flex justify-center">
               <StarRatingRow value={overallRating} onChange={setOverallRating} size={48} />
             </div>
-            <p className="text-sm text-[#005BC1] font-bold uppercase tracking-widest min-h-[20px]">
+            <p className="text-sm text-[#005BC1] font-bold uppercase tracking-widest min-h-5">
               {overallRating > 0 ? labels[overallRating - 1] : 'Toca una estrella para calificar'}
             </p>
           </section>
@@ -144,7 +144,7 @@ export default function CreateReviewPage() {
                 onChange={(e) => setComment(e.target.value)}
                 maxLength={500}
                 placeholder="Describe el servicio del repartidor, la calidad del agua, o cualquier otra cosa que quieras compartir..."
-                className="w-full min-h-[140px] p-4 rounded-2xl border border-slate-200 focus:border-[#005BC1] focus:ring-4 focus:ring-[#005BC1]/10 transition-all outline-none font-body text-slate-700 resize-none bg-white"
+                className="w-full min-h-35 p-4 rounded-2xl border border-slate-200 focus:border-[#005BC1] focus:ring-4 focus:ring-[#005BC1]/10 transition-all outline-none font-body text-slate-700 resize-none bg-white"
               />
               <div className="absolute bottom-4 right-4 text-slate-300 pointer-events-none">
                 <Edit3 size={18} />
@@ -160,7 +160,7 @@ export default function CreateReviewPage() {
                 <Camera size={32} />
               </div>
               <p className="font-bold text-slate-800 mb-1">Toma una foto o arrástrala aquí</p>
-              <p className="text-sm text-slate-500 text-center max-w-[280px]">
+              <p className="text-sm text-slate-500 text-center max-w-70">
                 Muéstranos cómo llegó tu pedido para ayudarnos a mejorar (Máx 3)
               </p>
               <input 
@@ -183,7 +183,7 @@ export default function CreateReviewPage() {
             <button 
               type="submit" 
               disabled={overallRating === 0}
-              className="flex-[2] px-6 py-4 rounded-xl font-bold text-white bg-[#005BC1] shadow-lg shadow-[#005BC1]/20 hover:bg-[#004a9e] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-2 px-6 py-4 rounded-xl font-bold text-white bg-[#005BC1] shadow-lg shadow-[#005BC1]/20 hover:bg-[#004a9e] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Enviar Reseña
             </button>
