@@ -1,6 +1,7 @@
 import { prisma } from '../../lib/prisma';
 //import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'; // Asumiendo que usarás componentes UI estándar
 import { MessageSquare, Users, Star } from 'lucide-react';
+import Image from 'next/image';
 
 export default async function AdminDashboard() {
   // Obtener métricas básicas desde la base de datos
@@ -15,9 +16,21 @@ export default async function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-3xl font-bold text-slate-900">Dashboard Administrativo</h1>
+      {/* Header con imagen profesional */}
+      <div className="flex items-center gap-4">
+        <div className="relative w-16 h-16">
+          <Image 
+              src="/gotaengsinfondo.png" 
+              alt="AguaYa admin"
+              fill
+              className="object-contain"
+          />
+        </div>
+        <h1 className="text-3xl font-bold text-slate-900">Dashboard Administrativo</h1>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
         <StatCard 
           title="Total Reseñas" 
           value={totalResenas.toString()} 
