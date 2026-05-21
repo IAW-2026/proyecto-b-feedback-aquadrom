@@ -60,7 +60,6 @@ export default function ValoranosPage() {
 
   try {
     const result = await createValoracion({
-      id_usuario: 'usuario_temp_456',
       estrellas: rating,
       comentario: comment,
     });

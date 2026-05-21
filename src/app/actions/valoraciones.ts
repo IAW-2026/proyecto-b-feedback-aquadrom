@@ -4,8 +4,8 @@ import { prisma } from '../../lib/prisma';
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 
+// Crear una valoración de la aplicación
 export async function createValoracion(data: {
-  id_usuario: string;
   estrellas: number;
   comentario: string;
 }) {
@@ -29,5 +29,18 @@ export async function createValoracion(data: {
   } catch (error) {
     console.error('Error al crear valoración:', error);
     return { success: false, error: 'Error al guardar la valoración' };
+  }
+}
+
+// Obtener todas las valoraciones de la aplicación (para los administradores)
+export async function getValoraciones() {
+  try {
+    const valoraciones = await prisma.valoracion.findMany({
+      orderBy: { fecha: 'desc' },
+    });
+    return { success: true, valoraciones };
+  } catch (error) {
+    console.error('Error al obtener valoraciones:', error);
+    return { success: false, error: 'Error al obtener valoraciones' };
   }
 }

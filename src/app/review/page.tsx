@@ -62,12 +62,13 @@ function OrderReviewCard({ id, date, items, status, rating, pending }: any) {
 
         <div className="flex items-center">
           {pending ? (
-            <button 
+            <Link
+              href={`/review/${id}`}
               className="w-full md:w-auto bg-[#005BC1] hover:bg-[#004a9e] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-[#005BC1]/20 transition-all active:scale-95 flex items-center justify-center gap-2"
             >
               Calificar Entrega
               <ArrowRight size={16} />
-            </button>
+            </Link>
           ) : (
             <div className="flex flex-col items-end gap-2">
               <div className="flex gap-0.5">
