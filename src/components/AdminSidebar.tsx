@@ -27,7 +27,7 @@ export default function AdminSidebar() {
       {/* Header del Sidebar */}
       <div className="p-6 border-b border-slate-100">
         <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-          Admin Panel
+          Admin Feedback
         </h2>
       </div>
 
