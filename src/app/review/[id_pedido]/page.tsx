@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Star, Truck, Camera, Edit3 } from 'lucide-react';
+import { Star, Truck, Camera, Edit3, X } from 'lucide-react';
 import { createResena } from '../../actions/resenas';
 import { useRouter, useParams } from 'next/navigation';
+import { CldUploadWidget } from 'next-cloudinary';
+import Image from 'next/image';
 
 // Sub-componente para las etiquetas rápidas
 function QuickTag({ label, isActive, onClick }: { label: string, isActive: boolean, onClick: () => void }) {
@@ -54,6 +56,7 @@ export default function CreateReviewPage() {
   // Estados para capturar toda la información del formulario
   const [overallRating, setOverallRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const labels = ['Terrible', 'Malo', 'Regular', 'Bueno', '¡Excelente!'];
@@ -68,6 +71,7 @@ export default function CreateReviewPage() {
         id_vendedor: 'vendedor_placeholder_id', // En etapa 3, esto vendrá de la API del Seller
         estrellas: overallRating,
         comentario: comment,
+        foto: imageUrl || undefined,
       });
 
       if (result.success) {
@@ -154,23 +158,42 @@ export default function CreateReviewPage() {
 
           {/* Subida de Fotos */}
           <section className="space-y-4">
-            <h3 className="text-lg font-bold text-slate-800">Añadir Fotos (Opcional)</h3>
-            <div className="relative overflow-hidden bg-white border-2 border-dashed border-slate-200 rounded-2xl p-8 flex flex-col items-center justify-center hover:border-[#005BC1] hover:bg-[#005BC1]/5 transition-all cursor-pointer group">
-              <div className="w-16 h-16 bg-[#005BC1]/10 text-[#005BC1] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
-                <Camera size={32} />
+            <h3 className="text-lg font-bold text-slate-800">Añadir Foto (Opcional)</h3>
+            
+            {imageUrl ? (
+              <div className="relative w-full h-48 rounded-2xl overflow-hidden border border-slate-200">
+                <Image src={imageUrl} alt="Reseña" fill className="object-cover" />
+                <button 
+                  type="button"
+                  onClick={() => setImageUrl(null)}
+                  className="absolute top-2 right-2 bg-rose-500 text-white p-1 rounded-full hover:bg-rose-600"
+                >
+                  <X size={16} />
+                </button>
               </div>
-              <p className="font-bold text-slate-800 mb-1">Toma una foto o arrástrala aquí</p>
-              <p className="text-sm text-slate-500 text-center max-w-70">
-                Muéstranos cómo llegó tu pedido para ayudarnos a mejorar (Máx 3)
-              </p>
-              <input 
-                type="file" 
-                accept="image/*" 
-                multiple 
-                className="absolute inset-0 opacity-0 cursor-pointer" 
-              />
-            </div>
+            ) : (
+              <CldUploadWidget
+                uploadPreset="imagenesresenas" // Asegúrate de tener este preset configurado en Cloudinary
+                onSuccess={(result: any) => {
+                  setImageUrl(result.info.secure_url);
+                }}
+              >
+                {({ open }) => (
+                  <button
+                    type="button"
+                    onClick={() => open()}
+                    className="w-full relative overflow-hidden bg-white border-2 border-dashed border-slate-200 rounded-2xl p-8 flex flex-col items-center justify-center hover:border-[#005BC1] hover:bg-[#005BC1]/5 transition-all group"
+                  >
+                    <div className="w-16 h-16 bg-[#005BC1]/10 text-[#005BC1] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
+                      <Camera size={32} />
+                    </div>
+                    <p className="font-bold text-slate-800 mb-1">Haz clic para subir una foto</p>
+                  </button>
+                )}
+              </CldUploadWidget>
+            )}
           </section>
+
 
           {/* Botones de Acción */}
           <div className="flex flex-col-reverse md:flex-row gap-4 pt-4">
