@@ -33,7 +33,7 @@ function SummaryItem({ label, value, icon: Icon, colorClass, subtext }: any) {
 }
 
 // Sub-componente 
-function OrderReviewCard({ id, date, items, status, rating, pending }: any) {
+function OrderReviewCard({ id, date, items, status, rating, pending, id_resena }: any) {
   return (
     <div className={`bg-white p-5 rounded-2xl shadow-sm border-l-4 transition-all hover:shadow-md ${
       pending ? 'border-l-[#005BC1]' : 'border-l-slate-200 opacity-90'
@@ -81,9 +81,9 @@ function OrderReviewCard({ id, date, items, status, rating, pending }: any) {
                   />
                 ))}
               </div>
-              <button className="text-[#005BC1] font-bold text-xs hover:underline">
+              <Link href={`/review/view/${id_resena}`} className="text-[#005BC1] font-bold text-xs hover:underline">
                 Ver Reseña
-              </button>
+              </Link>
             </div>
           )}
         </div>
@@ -109,7 +109,8 @@ export default async function ResenasPage() {
     return {
       ...order,
       pending: !resena,
-      rating: resena?.estrellas
+      rating: resena?.estrellas,
+      id_resena: resena?.id_resena // Pasamos el id_resena
     };
   });
 
