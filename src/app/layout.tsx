@@ -38,11 +38,6 @@ export default function RootLayout({
           <footer className="bg-slate-100 border-t border-slate-200 py-8">
             <div className="container mx-auto px-4 text-center text-slate-600">
               <p>&copy; 2026 AguaYa. Todos los derechos reservados.</p>
-              <div className="mt-4 space-x-4">
-                <a href="/privacidad" className="hover:text-primary transition-colors">Política de Privacidad</a>
-                <a href="/terminos" className="hover:text-primary transition-colors">Términos de Servicio</a>
-                <a href="/contacto" className="hover:text-primary transition-colors">Contacto</a>
-              </div>
             </div>
           </footer>
         </body>

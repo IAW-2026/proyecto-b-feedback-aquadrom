@@ -7,7 +7,7 @@ export default function Home() {
     <div className="space-y-16">
       <section className="text-center mt-12">
         <h1 className="font-headline text-4xl md:text-6xl font-bold text-[#005BC1] leading-tight">
-          ¿Como podemos ayudarte?
+          ¿Cómo podemos ayudarte?
         </h1>
       </section>
 
