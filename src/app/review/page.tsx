@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { getResenasByUser } from '../actions/getResenas';
+import { prisma } from '../../lib/prisma';
 
 export const revalidate = 0; 
 
@@ -94,23 +95,29 @@ function OrderReviewCard({ id, date, items, status, rating, pending, id_resena }
 
 export default async function ResenasPage() {
   const user = await currentUser();
-  const resenasResult = await getResenasByUser();
+  if (!user) return null;
+
+  // 1. Obtener pedidos desde DB y reseñas existentes en paralelo
+  const [pedidos, resenasResult] = await Promise.all([
+    prisma.pedido.findMany({ 
+      where: { id_comprador: user.id }, 
+      orderBy: { fecha: 'desc' } 
+    }),
+    getResenasByUser()
+  ]);
+
   const resenas = resenasResult.success && resenasResult.resenas ? resenasResult.resenas : [];
 
-  const orders = [
-    { id: '12345', date: '18 de Mayo, 2024', items: '2x 20L Premium', status: 'Entregado' }, 
-    { id: '12312', date: '10 de Mayo, 2024', items: '1x 20L Premium', status: 'Completado' }, 
-    { id: '12290', date: '02 de Mayo, 2024', items: '3x 20L Premium', status: 'Completado' }, 
-    { id: '12275', date: '28 de Abril, 2024', items: '2x 20L Premium', status: 'Entregado' }, 
-  ];
-
-  const processedOrders = orders.map(order => {
-    const resena = resenas.find(r => r.id_pedido === order.id);
+  const processedOrders = pedidos.map(pedido => {
+    const resena = resenas.find(r => r.id_pedido === pedido.id_pedido);
     return {
-      ...order,
+      id: pedido.id_pedido,
+      date: pedido.fecha.toLocaleDateString(),
+      items: pedido.snapshot_producto_nombre,
+      status: pedido.estado,
       pending: !resena,
       rating: resena?.estrellas,
-      id_resena: resena?.id_resena // Pasamos el id_resena
+      id_resena: resena?.id_resena
     };
   });
 
@@ -135,15 +142,15 @@ export default async function ResenasPage() {
             <div className="grid grid-cols-1 gap-6">
               <SummaryItem 
                 label="Pedidos Totales" 
-                value={orders.length}
+                value={pedidos.length}
                 icon={PackageCheck} 
-                colorClass="bg-blue-50 text-blue-600" 
+                colorClass="bg-blue-50  text-blue-600" 
               />
               <SummaryItem 
                 label="Pendientes de Calificar" 
                 value={pendingCount} 
                 icon={pendingCount === 0 ? Award : AlertCircle} 
-                colorClass={pendingCount === 0 ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"}
+                colorClass={pendingCount === 0 ? "bg-emerald-50  text-emerald-600 " : "bg-rose-50  text-rose-600 "}
                 subtext={pendingCount === 0 ? "¡Todo al día!" : "Acción requerida"} 
               />
             </div>

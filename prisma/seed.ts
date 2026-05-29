@@ -1,97 +1,70 @@
 import 'dotenv/config';
-import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const connectionString = process.env.DATABASE_URL;
+const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('Seeding database...');
+  console.log('Repoblando base de datos...');
 
-  // Limpiar tablas
+  // 1. Limpiar (cuidado en producción, pero necesario para desarrollo)
   await prisma.resena.deleteMany({});
-  await prisma.valoracion.deleteMany({});
-  await prisma.adminFeedback.deleteMany({});
+  await prisma.pedido.deleteMany({});
 
-  // Crear Reseñas de prueba
-  await prisma.resena.create({
-    data: {
-      id_pedido: 'pedido_001',
-      id_usuario: 'user_clerk_1',
-      id_vendedor: 'vendedor_clerk_1',
-      estrellas: 5,
-      comentario: 'Excelente vendedor, producto de calidad y entrega rápida',
-      foto: 'https://example.com/foto1.jpg',
-    },
+  // 2. Insertar pedidos de prueba
+  await prisma.pedido.createMany({
+    data: [
+      { 
+        id_pedido: '12345', 
+        id_vendedor: 'vend_1', 
+        id_comprador: 'user_clerk_1', 
+        snapshot_producto_nombre: 'Bidón 20L', 
+        snapshot_producto_precio: 4000, 
+        estado: 'Entregado', 
+        monto: 4000,
+        fecha: new Date('2024-05-18T10:00:00Z')
+      },
+      { 
+        id_pedido: '12312', 
+        id_vendedor: 'vend_2', 
+        id_comprador: 'user_clerk_1', 
+        snapshot_producto_nombre: 'Pack Soda', 
+        snapshot_producto_precio: 1500, 
+        estado: 'Entregado', 
+        monto: 1500,
+        fecha: new Date('2024-05-10T10:00:00Z')
+      },
+      { 
+        id_pedido: '12290', 
+        id_vendedor: 'vend_3', 
+        id_comprador: 'user_clerk_1', 
+        snapshot_producto_nombre: 'Agua Mineral 20L', 
+        snapshot_producto_precio: 4500, 
+        estado: 'Entregado', 
+        monto: 4500,
+        fecha: new Date('2024-05-02T10:00:00Z')
+      },
+      { 
+        id_pedido: '12275', 
+        id_vendedor: 'vend_1', 
+        id_comprador: 'user_clerk_1', 
+        snapshot_producto_nombre: 'Bidón 20L', 
+        snapshot_producto_precio: 4000, 
+        estado: 'Entregado', 
+        monto: 4000,
+        fecha: new Date('2024-04-28T10:00:00Z')
+      },
+    ],
   });
 
-  await prisma.resena.create({
-    data: {
-      id_pedido: 'pedido_002',
-      id_usuario: 'user_clerk_2',
-      id_vendedor: 'vendedor_clerk_2',
-      estrellas: 4,
-      comentario: 'Muy buena experiencia, recomendado',
-      foto: 'https://example.com/foto2.jpg',
-    },
-  });
-
-  await prisma.resena.create({
-    data: {
-      id_pedido: 'pedido_003',
-      id_usuario: 'user_clerk_3',
-      id_vendedor: 'vendedor_clerk_1',
-      estrellas: 3,
-      comentario: 'Producto OK, pero la entrega tardó más de lo esperado',
-    },
-  });
-
-  // Crear Valoraciones de prueba
-  await prisma.valoracion.create({
-    data: {
-      id_pedido: 'pedido_004',
-      id_usuario: 'user_clerk_4',
-      id_vendedor: 'vendedor_clerk_2',
-      comentario: 'Buena atención al cliente',
-      estrellas: 4,
-    },
-  });
-
-  await prisma.valoracion.create({
-    data: {
-      id_pedido: 'pedido_005',
-      id_usuario: 'user_clerk_5',
-      id_vendedor: 'vendedor_clerk_1',
-      comentario: 'Excelente servicio general',
-      estrellas: 5,
-    },
-  });
-
-  // Crear Admins de prueba
-  await prisma.adminFeedback.create({
-    data: {
-      id_usuario: 'admin_clerk_1',
-      nombre: 'Administrador Principal',
-    },
-  });
-
-  await prisma.adminFeedback.create({
-    data: {
-      id_usuario: 'admin_clerk_2',
-      nombre: 'Moderador de Contenido',
-    },
-  });
-
-  console.log('Seed completed successfully.');
+  console.log('Seed completado.');
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
+main().catch(console.error).finally(async () => {
     await prisma.$disconnect();
-  });
+    await pool.end();
+});

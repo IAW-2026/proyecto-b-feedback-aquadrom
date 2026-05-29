@@ -10,13 +10,14 @@ datasource db {
 }
 
 model Resena {
-  id_resena Int      @id @default(autoincrement())
-  id_pedido     String   // Referencia al pedido original en SellerApp 
+  id_resena     Int      @id @default(autoincrement())
+  id_pedido     String   @unique // Hacemos unique para la relación 1 a 1 con Pedido
+  pedido        Pedido   @relation(fields: [id_pedido], references: [id_pedido])
   id_usuario    String   // El ID del Comprador (sub de Clerk) 
   id_vendedor   String   // El ID del Vendedor calificado 
   estrellas     Int      // Calificación del 1 al 5 
   comentario    String?  @db.Text
-  foto          String?  // URL de la imagen (te conviene agregarlo por el Entregable 1.4) 
+  foto          String?  // URL de la imagen
   fecha         DateTime @default(now())
 }
 
@@ -32,4 +33,16 @@ model AdminFeedback {
   id_admin   Int    @id @default(autoincrement())
   id_usuario String @unique // El 'sub' de Clerk del moderador
   nombre     String
+}
+
+model Pedido {
+  id_pedido               String   @id // El ID que te envían desde la API externa
+  id_vendedor             String   // ID del vendedor (o tienda)
+  id_comprador            String   // ID del usuario (de Clerk)
+  snapshot_producto_nombre String
+  snapshot_producto_precio Float
+  estado                  String
+  fecha                   DateTime @default(now())
+  monto                   Float
+  resena                  Resena?  // Relación opcional con tu tabla de Reseñas
 }
