@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { SignInButton, UserButton, Show } from '@clerk/nextjs';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
   return (
-    <nav className="bg-white text-slate-900 shadow-sm border-b border-slate-200">
+    <nav className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-sm border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
@@ -19,7 +20,7 @@ export default function Navbar() {
             >
               {/* Uso la imagen del logo, luego cambiarla por una de mejor calidad  */}
               <Image 
-                src="/gotasinfondo.png" 
+                src="/favicon-removebg-preview.png" 
                 alt="Logo AguaYa" 
                 width={38}
                 height={78} 
@@ -38,7 +39,7 @@ export default function Navbar() {
                 <Search className="text-primary text-lg" />
               </div>
               <input 
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 bg-white shadow-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-900 shadow-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-400"
                 placeholder="Busca respuestas sobre proveedores, bidones o sobre la app..." 
                 type="text"
               />
@@ -51,7 +52,7 @@ export default function Navbar() {
             
             {/* Sección de Autenticación Dinámica */}
             <div className="border-l border-slate-300 pl-8 flex items-center gap-4">
-              
+              <ThemeToggle />
               {/* Esto solo se ve si el usuario NO está logueado */}
               <Show when="signed-out">
                 <SignInButton mode="modal">

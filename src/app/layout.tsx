@@ -3,6 +3,7 @@ import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 
 import { ClerkProvider } from '@clerk/nextjs'
+import { Providers } from '../components/Providers';
 import Navbar from "../components/Navbar";
 
 const montserrat = Montserrat({
@@ -30,16 +31,18 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="es" className={`${montserrat.variable} ${inter.variable} h-full antialiased`}>
-        <body className="min-h-full flex flex-col bg-slate-50 text-slate-900">
-          <Navbar />
-          <main className="grow container mx-auto px-4 py-8">
-            {children}
-          </main>
-          <footer className="bg-slate-100 border-t border-slate-200 py-8">
-            <div className="container mx-auto px-4 text-center text-slate-600">
-              <p>&copy; 2026 AguaYa. Todos los derechos reservados.</p>
-            </div>
-          </footer>
+        <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+          <Providers>
+            <Navbar />
+            <main className="grow container mx-auto px-4 py-8">
+              {children}
+            </main>
+            <footer className="bg-slate-100 border-t border-slate-200 py-8 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-400">
+              <div className="container mx-auto px-4 text-center text-slate-600 dark:text-slate-400">
+                <p>&copy; 2026 AguaYa. Todos los derechos reservados.</p>
+              </div>
+            </footer>
+          </Providers>
         </body>
       </html>
     </ClerkProvider>
