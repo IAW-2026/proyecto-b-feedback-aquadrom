@@ -124,7 +124,7 @@ export default async function ResenasPage() {
   const pendingCount = processedOrders.filter(o => o.pending).length;
 
   return (
-    <main className="min-h-screen bg-slate-50/50 pt-24 pb-16 px-4">
+    <main className="min-h-screen bg-slate-100 pt-24 pb-16 px-4 rounded-lg">
       <div className="max-w-6xl mx-auto space-y-10">
         
         <section className="space-y-2">
