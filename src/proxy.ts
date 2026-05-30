@@ -1,7 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 // Definimos qué rutas son públicas (como las FAQs) y cuáles requieren autenticación (como las rutas de feedback)
-const isPublicRoute = createRouteMatcher(['/api/faqs', '/sign-in(.*)', '/sign-up(.*)']);
+const isPublicRoute = createRouteMatcher(['/api/faqs', '/sign-in(.*)', '/sign-up(.*)', '/', '/resenas(.*)']);
 
 export default clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {

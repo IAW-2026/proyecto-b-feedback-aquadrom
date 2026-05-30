@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Truck, Recycle, CreditCard, HelpCircle, ChevronDown, Droplets, Star, MessageSquareText, CircleQuestionMark } from "lucide-react";
+import { Star, MessageSquareText, CircleQuestionMark, MessageSquareHeart } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -37,7 +37,7 @@ export default function Home() {
         </div>
         <div className="space-y-1">
           <h3 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
-            Reseñas
+            Tus Reseñas
           </h3>
           <p className="text-sm text-slate-500 font-body leading-relaxed">
             Comparte tu experiencia con nuestros servicios y proveedores.
@@ -61,6 +61,23 @@ export default function Home() {
         </div>
       </div> 
       </Link>
+
+        <Link href="/resenas" className="block md:col-span-full">
+       <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm dark:shadow-slate-900/60 hover:shadow-md transition-all border border-blue-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 flex flex-col items-center text-center space-y-4 cursor-pointer group">
+        <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-slate-700 flex items-center justify-center text-blue-700 dark:text-blue-200 group-hover:scale-110 group-hover:bg-blue-600 dark:group-hover:bg-blue-700 group-hover:text-white transition-all duration-300">
+          <MessageSquareHeart className="text-3xl" />
+        </div>
+        <div className="space-y-1">
+          <h3 className="font-headline text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+            Ver Reseñas
+          </h3>
+          <p className="text-sm text-slate-600 dark:text-slate-300 font-body leading-relaxed">
+            Busca y consulta las opiniones de otros clientes sobre nuestros proveedores.
+          </p>
+        </div>
+      </div> 
+      </Link>
+
       </section>
 
 
