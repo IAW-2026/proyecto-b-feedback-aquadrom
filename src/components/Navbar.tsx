@@ -32,19 +32,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Barra de Búsqueda */}
-          <div className="hidden md:flex flex-1 max-w-lg mx-8">
-            <div className="w-full relative group">
-              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                <Search className="text-primary text-lg" />
-              </div>
-              <input 
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-900 shadow-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-400"
-                placeholder="Busca respuestas sobre proveedores, bidones o sobre la app..." 
-                type="text"
-              />
-            </div>
-          </div>
+        
 
           {/* Links de Navegación */}
           <div className="hidden md:flex space-x-8 items-center">

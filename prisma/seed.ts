@@ -9,59 +9,32 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('Repoblando base de datos...');
+  console.log('Repoblando base de datos con 100 pedidos para 3 usuarios diferentes...');
 
-  // 1. Limpiar (cuidado en producción, pero necesario para desarrollo)
+  // 1. Limpiar (cuidado en producción)
   await prisma.resena.deleteMany({});
   await prisma.pedido.deleteMany({});
 
-  // 2. Insertar pedidos de prueba
+  const buyers = ['user_clerk_1', 'user_clerk_2', 'user_clerk_3'];
+
+  // 2. Generar 100 pedidos
+  const pedidos = Array.from({ length: 100 }).map((_, i) => ({
+    id_pedido: `PED-${1000 + i}`,
+    id_vendedor: `VEND-${Math.floor(Math.random() * 5) + 1}`,
+    id_comprador: buyers[i % 3], // Cicla entre los 3 usuarios
+    snapshot_producto_nombre: `Bidón Premium ${i + 1}`,
+    snapshot_producto_precio: 4000 + (i * 10),
+    estado: 'Entregado',
+    monto: 4000 + (i * 10),
+    fecha: new Date(Date.now() - i * 86400000), // Un día más viejo por cada pedido
+  }));
+
+  // 3. Insertar
   await prisma.pedido.createMany({
-    data: [
-      { 
-        id_pedido: '12345', 
-        id_vendedor: 'vend_1', 
-        id_comprador: 'user_clerk_1', 
-        snapshot_producto_nombre: 'Bidón 20L', 
-        snapshot_producto_precio: 4000, 
-        estado: 'Entregado', 
-        monto: 4000,
-        fecha: new Date('2024-05-18T10:00:00Z')
-      },
-      { 
-        id_pedido: '12312', 
-        id_vendedor: 'vend_2', 
-        id_comprador: 'user_clerk_1', 
-        snapshot_producto_nombre: 'Pack Soda', 
-        snapshot_producto_precio: 1500, 
-        estado: 'Entregado', 
-        monto: 1500,
-        fecha: new Date('2024-05-10T10:00:00Z')
-      },
-      { 
-        id_pedido: '12290', 
-        id_vendedor: 'vend_3', 
-        id_comprador: 'user_clerk_1', 
-        snapshot_producto_nombre: 'Agua Mineral 20L', 
-        snapshot_producto_precio: 4500, 
-        estado: 'Entregado', 
-        monto: 4500,
-        fecha: new Date('2024-05-02T10:00:00Z')
-      },
-      { 
-        id_pedido: '12275', 
-        id_vendedor: 'vend_1', 
-        id_comprador: 'user_clerk_1', 
-        snapshot_producto_nombre: 'Bidón 20L', 
-        snapshot_producto_precio: 4000, 
-        estado: 'Entregado', 
-        monto: 4000,
-        fecha: new Date('2024-04-28T10:00:00Z')
-      },
-    ],
+    data: pedidos,
   });
 
-  console.log('Seed completado.');
+  console.log('Seed completado: 100 pedidos insertados para 3 compradores.');
 }
 
 main().catch(console.error).finally(async () => {

@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ClerkProvider } from '@clerk/nextjs'
 import { Providers } from '../components/Providers';
+import { ThemeScript } from '../components/ThemeScript';
 import Navbar from "../components/Navbar";
 
 const montserrat = Montserrat({
@@ -30,9 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="es" className={`${montserrat.variable} ${inter.variable} h-full antialiased`}>
+      <html lang="es" className={`${montserrat.variable} ${inter.variable} h-full antialiased`} suppressHydrationWarning>
         <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
           <Providers>
+            <ThemeScript />
             <Navbar />
             <main className="grow container mx-auto px-4 py-8">
               {children}
