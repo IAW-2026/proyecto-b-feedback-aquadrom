@@ -11,22 +11,21 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { getResenasByUser } from '../actions/getResenas';
-import { prisma } from '../../lib/prisma';
+import { getPedidosByUser } from '../actions/pedidos';
 
 export const revalidate = 0; 
-
 // Sub-componente 
 function SummaryItem({ label, value, icon: Icon, colorClass, subtext }: any) {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 space-y-4">
       <div className="flex justify-between items-start">
         <div className={`p-3 rounded-xl ${colorClass}`}>
           <Icon size={24} />
         </div>
-        <span className="text-2xl font-bold text-slate-800">{value}</span>
+        <span className="text-2xl font-bold text-slate-800 dark:text-white">{value}</span>
       </div>
       <div>
-        <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">{label}</p>
+        <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{label}</p>
         {subtext && <p className="text-xs text-rose-500 font-medium mt-1">{subtext}</p>}
       </div>
     </div>
@@ -36,26 +35,26 @@ function SummaryItem({ label, value, icon: Icon, colorClass, subtext }: any) {
 // Sub-componente 
 function OrderReviewCard({ id, date, items, status, rating, pending, id_resena }: any) {
   return (
-    <div className={`bg-white p-5 rounded-2xl shadow-sm border-l-4 transition-all hover:shadow-md ${
-      pending ? 'border-l-[#005BC1]' : 'border-l-slate-200 opacity-90'
+    <div className={`bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border-l-4 transition-all hover:shadow-md ${
+      pending ? 'border-l-[#005BC1]' : 'border-l-slate-200 dark:border-slate-700 opacity-90'
     }`}>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex-1 space-y-3">
           <div className="flex items-center gap-3">
-            <span className="font-bold text-lg text-slate-800">#{id}</span>
+            <span className="font-bold text-lg text-slate-800 dark:text-white">#{id}</span>
             <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
-              pending ? 'bg-[#005BC1]/10 text-[#005BC1]' : 'bg-slate-100 text-slate-500'
+              pending ? 'bg-[#005BC1]/10 text-[#005BC1]' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300'
             }`}>
               {status}
             </span>
           </div>
           
-          <div className="flex flex-wrap gap-4 text-sm text-slate-500">
+          <div className="flex flex-wrap gap-4 text-sm text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-1.5">
               <Calendar size={16} />
               {date}
             </div>
-            <div className="flex items-center gap-1.5 font-medium text-slate-700">
+            <div className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
               <Droplets size={16} className="text-[#005BC1]" />
               {items}
             </div>
@@ -78,11 +77,11 @@ function OrderReviewCard({ id, date, items, status, rating, pending, id_resena }
                   <Star 
                     key={star} 
                     size={18} 
-                    className={star <= (rating || 0) ? 'text-amber-400 fill-amber-400' : 'text-slate-200'} 
+                    className={star <= (rating || 0) ? 'text-amber-400 fill-amber-400' : 'text-slate-200 dark:text-slate-600'} 
                   />
                 ))}
               </div>
-              <Link href={`/review/view/${id_resena}`} className="text-[#005BC1] font-bold text-xs hover:underline">
+              <Link href={`/review/view/${id_resena}`} className="text-[#005BC1] dark:text-blue-400 font-bold text-xs hover:underline">
                 Ver Reseña
               </Link>
             </div>
@@ -93,16 +92,21 @@ function OrderReviewCard({ id, date, items, status, rating, pending, id_resena }
   );
 }
 
-export default async function ResenasPage() {
+export default async function ResenasPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const params = await searchParams;
   const user = await currentUser();
   if (!user) return null;
 
-  // 1. Obtener pedidos desde DB y reseñas existentes en paralelo
-  const [pedidos, resenasResult] = await Promise.all([
-    prisma.pedido.findMany({ 
-      where: { id_comprador: user.id }, 
-      orderBy: { fecha: 'desc' } 
-    }),
+  const page = parseInt(params.page || '1');
+  const limit = 3;
+
+  // 1. Obtener pedidos paginados desde DB y reseñas existentes en paralelo
+  const [{ pedidos, totalPages }, resenasResult] = await Promise.all([
+    getPedidosByUser(page, limit),
     getResenasByUser()
   ]);
 
@@ -121,7 +125,9 @@ export default async function ResenasPage() {
     };
   });
 
+  // Calculamos el total de pendientes (a nivel de usuario para el resumen)
   const pendingCount = processedOrders.filter(o => o.pending).length;
+
 
   return (
     <main className="min-h-screen bg-slate-100 pt-24 pb-16 px-4 rounded-lg">
@@ -166,11 +172,20 @@ export default async function ResenasPage() {
               ))}
             </div>
 
-            <div className="pt-8 flex justify-center">
-              <button className="flex items-center gap-2 px-8 py-3 rounded-full bg-white border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-all">
-                Ver Pedidos Anteriores 
-                <ChevronDown size={18} />
-              </button>
+            <div className="pt-8 flex justify-center gap-4">
+              <Link 
+                href={`/review?page=${page - 1}`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all ${page <= 1 ? 'pointer-events-none opacity-50' : ''}`}
+              >
+                Anterior
+              </Link>
+              <span className="flex items-center text-sm font-bold text-slate-700 dark:text-slate-300">Página {page} de {totalPages}</span>
+              <Link 
+                href={`/review?page=${page + 1}`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all ${page >= totalPages ? 'pointer-events-none opacity-50' : ''}`}
+              >
+                Siguiente
+              </Link>
             </div>
           </section>
 
