@@ -36,14 +36,14 @@ function TeamMember({ name, role, imgSrc }: any) {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-slate-50/50">
+    <div className="min-h-screen bg-slate-50/50 rounded-lg">
       
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0 overflow-hidden bg-slate-50">
-            <div className="absolute inset-0 transform scale-[1.8] translate-x-1/4 translate-y-1/4 opacity-30">
+      <section className="relative h-[60vh] flex items-center overflow-hidden rounded-lg">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-slate-50 rounded-lg">
+            <div className="absolute inset-0 transform scale-[1.8] translate-x-1/4 translate-y-1/4 opacity-30 rounded-lg">
                 <Image
-                src="/gotasinfondo.png" 
+                src="/favicon-removebg-preview.png" 
                 alt="AguaYa Background"
                 fill
                 className="object-contain rotate-12 blur-none" 

@@ -54,7 +54,7 @@ export default function FAQPage() {
     <div className="space-y-12 max-w-4xl mx-auto">
       {/* Hero Section */}
       <section className="mt-8 text-center">
-        <h1 className="font-headline text-3xl font-bold flex items-center justify-center gap-2 text-blue-900">
+        <h1 className="font-headline text-3xl font-bold flex items-center justify-center gap-2 text-blue-500">
           <HelpCircle className="text-primary w-8 h-8 text-blue-500" />
           Centro de Ayuda
         </h1>

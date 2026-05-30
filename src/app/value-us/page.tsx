@@ -79,7 +79,7 @@ export default function ValoranosPage() {
 };
 
   return (
-    <main className="min-h-screen bg-[#E3F2FD]/30 pt-24 pb-12 px-4">
+    <main className="min-h-screen bg-[#E3F2FD]/30 pt-24 pb-12 px-4 rounded-lg">
 
       <div className="max-w-4xl mx-auto space-y-8">
         
@@ -104,7 +104,7 @@ export default function ValoranosPage() {
             </div>
             <div className="hidden md:block relative h-48 w-full">
                <Image 
-                src="/gotasinfondo.png" 
+                src="/favicon-removebg-preview.png" 
                 alt="AguaYa Feedback"
                 fill
                 className="object-contain opacity-50"
