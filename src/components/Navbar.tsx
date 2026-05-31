@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { SignInButton, UserButton, Show } from '@clerk/nextjs';
 import Image from 'next/image';
-import { Search } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
@@ -18,7 +17,7 @@ export default function Navbar() {
               href="/" 
               className="flex items-center gap-2 text-xl font-headline font-bold tracking-tight text-primary"
             >
-              {/* Uso la imagen del logo, luego cambiarla por una de mejor calidad  */}
+              {/* Imagen del logo */}
               <Image 
                 src="/favicon-removebg-preview.png" 
                 alt="Logo AguaYa" 

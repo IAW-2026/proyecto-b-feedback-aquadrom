@@ -11,7 +11,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('Repoblando base de datos con 100 pedidos para 3 usuarios diferentes...');
 
-  // 1. Limpiar (cuidado en producción)
+  // 1. Limpiar 
   await prisma.resena.deleteMany({});
   await prisma.pedido.deleteMany({});
 

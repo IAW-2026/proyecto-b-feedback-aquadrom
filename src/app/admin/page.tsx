@@ -1,22 +1,21 @@
 import { prisma } from '../../lib/prisma';
-//import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'; // Asumiendo que usarás componentes UI estándar
 import { MessageSquare, Users, Star } from 'lucide-react';
 import Image from 'next/image';
 
 export default async function AdminDashboard() {
-  // Obtener métricas básicas desde la base de datos
+  // Obtener las métricas desde la base de datos
   const totalResenas = await prisma.resena.count();
   const totalValoraciones = await prisma.valoracion.count();
   const totalAdmins = await prisma.adminFeedback.count();
   
-  // Promedio simple de estrellas de las reseñas
+  // Promedio de estrellas de las reseñas
   const avgResenas = await prisma.resena.aggregate({
     _avg: { estrellas: true }
   });
 
   return (
     <div className="space-y-8">
-      {/* Header con imagen profesional */}
+      {/* Header con imagen */}
       <div className="flex items-center gap-4">
         <div className="relative w-16 h-16">
           <Image 

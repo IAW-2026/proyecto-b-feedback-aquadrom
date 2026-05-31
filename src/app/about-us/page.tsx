@@ -146,7 +146,7 @@ export default function AboutPage() {
                                                                         Falta ver si pongo link al github*/}
             <TeamMember name="León Álvarez" role="Buyer App" />
             <TeamMember name="Agustín Poza" role="Seller App" />
-            <TeamMember name="Jeremías Guttmann" role="Delivery App" imgSrc="/neopelado.jpeg"/>
+            <TeamMember name="Jeremías Guttmann" role="Delivery App" />
             <TeamMember name="Agustín Condorí" role="Payments App" />
             <TeamMember name="Gregorio Plunkett" role="Feedback App" />
 

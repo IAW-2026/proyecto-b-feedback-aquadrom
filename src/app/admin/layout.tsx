@@ -23,7 +23,7 @@ export default async function AdminLayout({
 
   const isAdmin = userRoles.includes('admin');
   if (!isAdmin) {
-    // Usuario autenticado pero no admin -> redirigir o mostrar 403
+    // Usuario autenticado pero no admin -> redirigir
     redirect('/');
   }
 

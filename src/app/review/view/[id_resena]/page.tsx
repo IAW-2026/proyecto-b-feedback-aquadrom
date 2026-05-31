@@ -1,5 +1,5 @@
 import { getResenaById } from '../../../../app/actions/resenas';
-import { Star, Truck, Calendar, MessageSquare, ArrowLeft } from 'lucide-react';
+import { Star, Truck, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ export default async function ViewReviewPage({ params }: { params: { id_resena: 
 
   return (
     <main className="min-h-screen bg-slate-50 pt-24 pb-16 px-4">
-      <div className="max-w-[720px] mx-auto space-y-8">
+      <div className="max-w-180 mx-auto space-y-8">
         
         {/* Botón Volver */}
         <Link 

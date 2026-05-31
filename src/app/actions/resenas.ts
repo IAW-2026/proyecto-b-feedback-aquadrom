@@ -4,7 +4,7 @@ import { prisma } from '../../lib/prisma';
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 
-// Crear una reseña (incluyendo la foto opcional)
+// Crear una reseña
 export async function createResena(data: {
   id_pedido: string;
   id_vendedor: string;

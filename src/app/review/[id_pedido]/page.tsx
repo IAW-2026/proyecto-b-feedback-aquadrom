@@ -24,7 +24,7 @@ function QuickTag({ label, isActive, onClick }: { label: string, isActive: boole
   );
 }
 
-// Sub-componente para la fila de estrellas (reutilizable)
+// Sub-componente para la fila de estrellas
 function StarRatingRow({ value, onChange, size = 24 }: { value: number, onChange: (val: number) => void, size?: number }) {
   const [hover, setHover] = useState(0);
   return (
@@ -173,7 +173,7 @@ export default function CreateReviewPage() {
               </div>
             ) : (
               <CldUploadWidget
-                uploadPreset="imagenesresenas" // Asegúrate de tener este preset configurado en Cloudinary
+                uploadPreset="imagenesresenas" //preset de cloudinary
                 onSuccess={(result: any) => {
                   setImageUrl(result.info.secure_url);
                 }}

@@ -6,12 +6,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // Nota: La URL ahora se gestiona desde prisma.config.ts usando env("DATABASE_URL")
 }
 
 model Resena {
   id_resena     Int      @id @default(autoincrement())
-  id_pedido     String   @unique // Hacemos unique para la relación 1 a 1 con Pedido
+  id_pedido     String   @unique // Es unique para la relación 1 a 1 con Pedido
   pedido        Pedido   @relation(fields: [id_pedido], references: [id_pedido])
   id_usuario    String   // El ID del Comprador (sub de Clerk) 
   id_vendedor   String   // El ID del Vendedor calificado 
@@ -36,13 +35,13 @@ model AdminFeedback {
 }
 
 model Pedido {
-  id_pedido               String   @id // El ID que te envían desde la API externa
-  id_vendedor             String   // ID del vendedor (o tienda)
+  id_pedido               String   @id // El ID que envían desde la API externa
+  id_vendedor             String   // ID del vendedor
   id_comprador            String   // ID del usuario (de Clerk)
   snapshot_producto_nombre String
   snapshot_producto_precio Float
   estado                  String
   fecha                   DateTime @default(now())
   monto                   Float
-  resena                  Resena?  // Relación opcional con tu tabla de Reseñas
+  resena                  Resena?  // Relación opcional con la tabla de Reseñas, si tiene reseña o no asociada
 }

@@ -17,7 +17,7 @@ export default async function ViewPublicReviewPage({ params }: { params: { id_re
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-24 pb-16 px-4">
-      <div className="max-w-[720px] mx-auto space-y-8">
+      <div className="max-w-180 mx-auto space-y-8">
         
         {/* Botón Volver */}
         <Link 

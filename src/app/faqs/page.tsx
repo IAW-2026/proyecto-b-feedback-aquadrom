@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Truck, Star, CreditCard, HelpCircle, ChevronDown } from "lucide-react";
 
-// Sub-componente para manejar cada pregunta individualmente
+// Sub componente para que cada faq sea un acordeón individual
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
 

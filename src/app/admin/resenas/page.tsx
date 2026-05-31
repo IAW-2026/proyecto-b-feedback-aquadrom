@@ -11,7 +11,7 @@ export default async function AdminResenasPage({
   const params = await searchParams;
   const page = parseInt(params.page || '1');
   const search = params.q || '';
-  const limit = 5; // Número de reseñas por página
+  const limit = 5; // Número de reseñas por página de la paginacion
   const skip = (page - 1) * limit;
 
   // 2. Filtros para Prisma

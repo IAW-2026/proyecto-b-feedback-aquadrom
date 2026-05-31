@@ -3,7 +3,6 @@ import {
   Calendar, 
   Droplets, 
   ArrowRight, 
-  ChevronDown, 
   AlertCircle, 
   Star,
   PackageCheck,
@@ -125,7 +124,7 @@ export default async function ResenasPage({
     };
   });
 
-  // Calculamos el total de pendientes (a nivel de usuario para el resumen)
+  // Calculamos el total de pendientes de reseñar para mostrar en el resumen
   const pendingCount = processedOrders.filter(o => o.pending).length;
 
 
