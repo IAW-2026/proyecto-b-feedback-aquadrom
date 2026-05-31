@@ -17,9 +17,7 @@ export default function AdminSidebar() {
   const menuItems = [
     { name: 'Dashboard', icon: LayoutDashboard, path: '/admin' },
     { name: 'Reseñas', icon: MessageSquare, path: '/admin/resenas' },
-    { name: 'Usuarios', icon: Users, path: '/admin/usuarios' },
-    { name: 'Moderación', icon: ShieldCheck, path: '/admin/moderacion' },
-    { name: 'Configuración', icon: Settings, path: '/admin/configuracion' },
+    { name: 'Valoraciones', icon: Users, path: '/admin/valoraciones' },
   ];
 
   return (

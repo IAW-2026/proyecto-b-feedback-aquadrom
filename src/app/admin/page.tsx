@@ -1,12 +1,11 @@
 import { prisma } from '../../lib/prisma';
-import { MessageSquare, Users, Star } from 'lucide-react';
+import { MessageSquare, Star, MessageSquareHeart } from 'lucide-react';
 import Image from 'next/image';
 
 export default async function AdminDashboard() {
   // Obtener las métricas desde la base de datos
   const totalResenas = await prisma.resena.count();
   const totalValoraciones = await prisma.valoracion.count();
-  const totalAdmins = await prisma.adminFeedback.count();
   
   // Promedio de estrellas de las reseñas
   const avgResenas = await prisma.resena.aggregate({
@@ -41,10 +40,11 @@ export default async function AdminDashboard() {
           icon={<Star className="h-6 w-6 text-amber-500" />} 
         />
         <StatCard 
-          title="Administradores" 
-          value={totalAdmins.toString()} 
-          icon={<Users className="h-6 w-6 text-purple-600" />} 
+          title="Total de Valoraciones" 
+          value={totalValoraciones.toString()} 
+          icon={<MessageSquareHeart className="h-6 w-6 text-green-500" />} 
         />
+
       </div>
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
