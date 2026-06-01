@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /resenas
+Disallow: /admin/
+Disallow: /seller/
+Disallow: /review/
+
+Sitemap: https://proyecto-b-feedback-aquadrom.vercel.app/
