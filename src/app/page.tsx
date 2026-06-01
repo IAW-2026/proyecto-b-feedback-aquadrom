@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <section className="text-center mt-12">
-        <h1 className="font-headline text-4xl md:text-6xl font-bold text-[#005BC1] leading-tight">
+        <h1 className="font-headline text-4xl md:text-6xl font-bold text-blue-900 dark:text-blue-300 leading-tight">
           ¿Cómo podemos ayudarte?
         </h1>
       </section>
@@ -20,9 +20,9 @@ export default function Home() {
           </div>
 
           <div className="space-y-1">
-            <h3 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
+            <h2 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
               Preguntas Frecuentes
-            </h3>
+            </h2>
             <p className="text-sm text-slate-500 font-body leading-relaxed">
               Guía de ayuda rápida sobre el uso de la app y detalles del servicio.
             </p>
@@ -36,9 +36,9 @@ export default function Home() {
           <MessageSquareText className="text-3xl" />
         </div>
         <div className="space-y-1">
-          <h3 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
+          <h2 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
             Tus Reseñas
-          </h3>
+          </h2>
           <p className="text-sm text-slate-500 font-body leading-relaxed">
             Comparte tu experiencia con nuestros servicios y proveedores.
           </p>
@@ -52,9 +52,9 @@ export default function Home() {
           <Star className="text-3xl" />
         </div>
         <div className="space-y-1">
-          <h3 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
+          <h2 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
             Valóranos
-          </h3>
+          </h2>
           <p className="text-sm text-slate-500 font-body leading-relaxed">
             Tu feedback es la herramienta principal para mejorar nuestro servicio.
           </p>
@@ -68,9 +68,9 @@ export default function Home() {
           <MessageSquareHeart className="text-3xl" />
         </div>
         <div className="space-y-1">
-          <h3 className="font-headline text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+          <h2 className="font-headline text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
             Ver Reseñas
-          </h3>
+          </h2>
           <p className="text-sm text-slate-600 dark:text-slate-300 font-body leading-relaxed">
             Busca y consulta las opiniones de otros clientes sobre nuestros proveedores.
           </p>
@@ -97,7 +97,7 @@ export default function Home() {
 
 
       <h2 className="text-4xl md:text-6xl font-headline font-bold leading-[1.1] text-white drop-shadow-md">
-        Comprometidos con tu <span className="text-[#007aff]">bienestar</span>
+        Comprometidos con tu <span className="text-blue-400">bienestar</span>
       </h2>
 
       <p className="text-lg md:text-xl font-body text-slate-200 opacity-90 max-w-lg leading-relaxed">
@@ -106,7 +106,7 @@ export default function Home() {
 
       {/* Botón de Acción (Call to Action) para linkear despues a about us*/}
       <div className="pt-4">
-        <Link href="/about-us" className="inline-flex bg-[#007aff] hover:bg-[#0058bc] text-white px-8 py-4 rounded-xl font-bold transition-all transform hover:-translate-y-1 active:scale-95 shadow-lg shadow-blue-500/30">
+        <Link href="/about-us" className="inline-flex bg-blue-700 hover:bg-blue-800 text-white px-8 py-4 rounded-xl font-bold transition-all transform hover:-translate-y-1 active:scale-95 shadow-lg shadow-blue-500/30">
           Conocer más
         </Link>
       </div>

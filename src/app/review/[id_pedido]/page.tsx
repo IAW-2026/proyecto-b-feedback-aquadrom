@@ -101,7 +101,7 @@ export default function CreateReviewPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 pt-24 pb-16 px-4">
-      <div className="max-w-[720px] mx-auto space-y-10">
+      <div className="max-w-180 mx-auto space-y-10">
         
         {/* Encabezado de Contexto */}
         <div className="text-center">
