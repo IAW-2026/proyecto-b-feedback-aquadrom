@@ -26,7 +26,7 @@ function TeamMember({ name, role, imgSrc }: any) {
           className="object-cover grayscale group-hover:grayscale-0 transition-all"
         />
       </div>
-      <h4 className="font-headline text-lg text-slate-800 font-bold">{name}</h4>
+      <h3 className="font-headline text-lg text-slate-800 font-bold">{name}</h3>
       <span className="text-xs font-bold text-[#005BC1] bg-[#005BC1]/10 px-4 py-1 rounded-full mt-2 uppercase tracking-tighter">
         {role}
       </span>

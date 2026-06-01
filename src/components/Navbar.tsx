@@ -28,9 +28,9 @@ export default function Navbar() {
                 height={78} 
                 className="object-fill"
               />
-              <span className="text-base sm:text-xl">
-                AguaYa <span className="text-[#007aff]">Feedback</span>
-              </span>
+               <span className="text-base sm:text-xl">
+                 AguaYa <span className="text-[#005BC1]">Feedback</span>
+               </span>
             </Link>
           </div>
         
@@ -38,6 +38,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button 
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
               className="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
             >
               {isOpen ? (

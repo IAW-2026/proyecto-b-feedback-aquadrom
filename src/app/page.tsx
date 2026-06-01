@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <section className="text-center mt-12">
-        <h1 className="font-headline text-4xl md:text-6xl font-bold text-blue-900 dark:text-blue-300 leading-tight">
+        <h1 className="font-headline text-4xl md:text-6xl font-bold text-slate-900 dark:text-blue-100 leading-tight">
           ¿Cómo podemos ayudarte?
         </h1>
       </section>
@@ -23,7 +23,7 @@ export default function Home() {
             <h2 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
               Preguntas Frecuentes
             </h2>
-            <p className="text-sm text-slate-500 font-body leading-relaxed">
+            <p className="text-sm text-slate-600 font-body leading-relaxed">
               Guía de ayuda rápida sobre el uso de la app y detalles del servicio.
             </p>
           </div>
@@ -39,9 +39,9 @@ export default function Home() {
           <h2 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
             Tus Reseñas
           </h2>
-          <p className="text-sm text-slate-500 font-body leading-relaxed">
-            Comparte tu experiencia con nuestros servicios y proveedores.
-          </p>
+            <p className="text-sm text-slate-600 font-body leading-relaxed">
+              Comparte tu experiencia con nuestros servicios y proveedores.
+            </p>
         </div>
       </div>
     </Link>
@@ -55,9 +55,9 @@ export default function Home() {
           <h2 className="font-headline text-xl font-bold text-slate-800 group-hover:text-[#005BC1] transition-colors">
             Valóranos
           </h2>
-          <p className="text-sm text-slate-500 font-body leading-relaxed">
-            Tu feedback es la herramienta principal para mejorar nuestro servicio.
-          </p>
+            <p className="text-sm text-slate-600 font-body leading-relaxed">
+              Tu feedback es la herramienta principal para mejorar nuestro servicio.
+            </p>
         </div>
       </div> 
       </Link>

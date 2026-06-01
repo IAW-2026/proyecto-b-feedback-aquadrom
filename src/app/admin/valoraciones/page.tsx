@@ -43,7 +43,9 @@ export default async function AdminValoracionesPage({
         
         {/* Filtro por Estrellas */}
         <form action={handleFilter} className="flex gap-2">
+          <label htmlFor="estrellas-filter" className="sr-only">Filtrar por estrellas</label>
           <select 
+            id="estrellas-filter"
             name="estrellas" 
             defaultValue={estrellas || ''}
             className="border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-[#005BC1] outline-none"
@@ -67,35 +69,35 @@ export default async function AdminValoracionesPage({
               <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Fecha</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-            {valoraciones.map((val) => (
-              <tr key={val.id_valoracion} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                <td className="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">{val.id_usuario}</td>
-                <td className="px-6 py-4 text-sm font-bold text-amber-500">{val.estrellas} ★</td>
-                <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{val.comentario}</td>
-                <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">{val.fecha.toLocaleDateString()}</td>
-              </tr>
-            ))}
-          </tbody>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+              {valoraciones.map((val) => (
+                <tr key={val.id_valoracion} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                  <td className="px-6 py-4 text-sm text-slate-900 dark:text-slate-100">{val.id_usuario}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-amber-600 dark:text-amber-400">{val.estrellas} ★</td>
+                  <td className="px-6 py-4 text-sm text-slate-700 dark:text-slate-200">{val.comentario}</td>
+                  <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{val.fecha.toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
         </table>
       </div>
 
       {/* Paginación */}
-      <div className="flex justify-between items-center mt-4">
-        <Link 
-          href={`/admin/valoraciones?page=${page - 1}&estrellas=${estrellas || ''}`}
-          className={`px-4 py-2 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm font-medium ${page <= 1 ? 'pointer-events-none opacity-50' : 'hover:bg-slate-50 dark:hover:bg-slate-700'}`}
-        >
-          Anterior
-        </Link>
-        <span className="text-sm font-bold text-slate-700 dark:text-slate-300">Página {page} de {totalPages || 1}</span>
-        <Link 
-          href={`/admin/valoraciones?page=${page + 1}&estrellas=${estrellas || ''}`}
-          className={`px-4 py-2 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm font-medium ${page >= totalPages ? 'pointer-events-none opacity-50' : 'hover:bg-slate-50 dark:hover:bg-slate-700'}`}
-        >
-          Siguiente
-        </Link>
-      </div>
+       <div className="flex justify-between items-center mt-4">
+         <Link 
+           href={`/admin/valoraciones?page=${page - 1}&estrellas=${estrellas || ''}`}
+           className={`px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-900 dark:text-slate-100 ${page <= 1 ? 'pointer-events-none opacity-50' : 'hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+         >
+           Anterior
+         </Link>
+         <span className="text-sm font-bold text-slate-900 dark:text-slate-100">Página {page} de {totalPages || 1}</span>
+         <Link 
+           href={`/admin/valoraciones?page=${page + 1}&estrellas=${estrellas || ''}`}
+           className={`px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-900 dark:text-slate-100 ${page >= totalPages ? 'pointer-events-none opacity-50' : 'hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+         >
+           Siguiente
+         </Link>
+       </div>
     </div>
   );
 }

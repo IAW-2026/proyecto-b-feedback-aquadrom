@@ -39,6 +39,7 @@ export default function AdminSidebar({
         </h2>
         <button 
           onClick={() => setIsOpen(false)}
+          aria-label="Cerrar menú lateral"
           className="md:hidden p-1 text-slate-500 hover:text-slate-800"
         >
           <ChevronLeft size={24} />

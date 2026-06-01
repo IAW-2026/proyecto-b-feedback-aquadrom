@@ -28,6 +28,7 @@ export default function AdminLayoutClient({
         <header className="md:hidden flex items-center p-4 bg-white border-b border-slate-200">
           <button 
             onClick={() => setIsSidebarOpen(true)}
+            aria-label="Abrir menú lateral"
             className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
           >
             <Menu size={24} />
