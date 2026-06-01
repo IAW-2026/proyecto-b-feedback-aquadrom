@@ -59,7 +59,7 @@ export default function Navbar() {
                 {/* Esto solo se ve si el usuario NO está logueado */}
                 <Show when="signed-out">
                   <SignInButton mode="modal">
-                    <button className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all font-body">
+                    <button className="bg-[#0058bc] hover:bg-[#004a9e] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all font-body">
                       Entrar
                     </button>
                   </SignInButton>
