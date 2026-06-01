@@ -21,7 +21,14 @@ export async function getPedidosByUser(page: number = 1, limit: number = 5) {
 
   return { 
     pedidos, 
+    total,
     totalPages: Math.ceil(total / limit),
     currentPage: page
   };
+}
+
+export async function getPedidoById(id_pedido: string) {
+  return await prisma.pedido.findUnique({
+    where: { id_pedido }
+  });
 }

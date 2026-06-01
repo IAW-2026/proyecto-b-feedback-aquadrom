@@ -7,7 +7,6 @@ import { revalidatePath } from 'next/cache';
 // Crear una reseña
 export async function createResena(data: {
   id_pedido: string;
-  id_vendedor: string;
   estrellas: number;
   comentario?: string;
   foto?: string;
@@ -19,11 +18,20 @@ export async function createResena(data: {
   }
 
   try {
+    // Buscar el pedido para obtener el id_vendedor
+    const pedido = await prisma.pedido.findUnique({
+      where: { id_pedido: data.id_pedido },
+    });
+
+    if (!pedido) {
+      throw new Error('Pedido no encontrado');
+    }
+
     const resena = await prisma.resena.create({
       data: {
         id_pedido: data.id_pedido,
         id_usuario: userId,
-        id_vendedor: data.id_vendedor,
+        id_vendedor: pedido.id_vendedor, // Obtenido del pedido
         estrellas: data.estrellas,
         comentario: data.comentario,
         foto: data.foto,

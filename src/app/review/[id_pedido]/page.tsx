@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, Truck, Camera, Edit3, X } from 'lucide-react';
 import { createResena } from '../../actions/resenas';
+import { getPedidoById } from '../../actions/pedidos';
 import { useRouter, useParams } from 'next/navigation';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
@@ -53,11 +54,21 @@ export default function CreateReviewPage() {
   const params = useParams();
   const id_pedido = params.id_pedido as string;
 
-  // Estados para capturar toda la información del formulario
+  // 1. Estados
+  const [pedido, setPedido] = useState<any>(null);
   const [overallRating, setOverallRating] = useState(0);
   const [comment, setComment] = useState('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // 2. Cargar pedido
+  useEffect(() => {
+    async function loadPedido() {
+      const data = await getPedidoById(id_pedido);
+      if (data) setPedido(data);
+    }
+    loadPedido();
+  }, [id_pedido]);
 
   const labels = ['Terrible', 'Malo', 'Regular', 'Bueno', '¡Excelente!'];
   
@@ -68,7 +79,6 @@ export default function CreateReviewPage() {
     try {
       const result = await createResena({
         id_pedido: id_pedido,
-        id_vendedor: 'vendedor_placeholder_id', // En etapa 3, esto vendrá de la API del Seller
         estrellas: overallRating,
         comentario: comment,
         foto: imageUrl || undefined,
@@ -76,7 +86,7 @@ export default function CreateReviewPage() {
 
       if (result.success) {
         alert('¡Reseña enviada con éxito!');
-        router.push('/review'); // Redirigir al historial
+        router.push('/review');
       } else {
         alert('Error: ' + result.error);
       }
@@ -87,9 +97,11 @@ export default function CreateReviewPage() {
     }
   };
 
+  if (!pedido) return <main className="min-h-screen pt-24 px-4 text-center">Cargando detalles del pedido...</main>;
+
   return (
     <main className="min-h-screen bg-slate-50 pt-24 pb-16 px-4">
-      <div className="max-w-180 mx-auto space-y-10">
+      <div className="max-w-[720px] mx-auto space-y-10">
         
         {/* Encabezado de Contexto */}
         <div className="text-center">
@@ -101,20 +113,20 @@ export default function CreateReviewPage() {
           </p>
         </div>
 
-        {/* Resumen del Pedido */}
+        {/* Resumen del Pedido REAL */}
         <div className="bg-white rounded-2xl p-6 flex items-center justify-between shadow-sm border border-slate-100">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-[#005BC1]/10 text-[#005BC1] rounded-xl flex items-center justify-center">
               <Truck size={24} />
             </div>
             <div>
-              <p className="text-xs font-bold text-[#005BC1] uppercase tracking-wider">Pedido #{id_pedido}</p>
-              <p className="font-bold text-slate-800">2x 20L Garrafones de Agua</p>
+              <p className="text-xs font-bold text-[#005BC1] uppercase tracking-wider">Pedido #{pedido.id_pedido}</p>
+              <p className="font-bold text-slate-800">{pedido.snapshot_producto_nombre}</p>
             </div>
           </div>
           <div className="text-right">
             <p className="text-xs text-slate-500">Entregado el</p>
-            <p className="font-bold text-slate-800">18 de Mayo, 2024</p>
+            <p className="font-bold text-slate-800">{new Date(pedido.fecha).toLocaleDateString()}</p>
           </div>
         </div>
 

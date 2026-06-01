@@ -104,7 +104,7 @@ export default async function ResenasPage({
   const limit = 3;
 
   // 1. Obtener pedidos paginados desde DB y reseñas existentes en paralelo
-  const [{ pedidos, totalPages }, resenasResult] = await Promise.all([
+  const [{ pedidos, total, totalPages }, resenasResult] = await Promise.all([
     getPedidosByUser(page, limit),
     getResenasByUser()
   ]);
@@ -147,7 +147,7 @@ export default async function ResenasPage({
             <div className="grid grid-cols-1 gap-6">
               <SummaryItem 
                 label="Pedidos Totales" 
-                value={pedidos.length}
+                value={total}
                 icon={PackageCheck} 
                 colorClass="bg-blue-50  text-blue-600" 
               />
