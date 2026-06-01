@@ -1,4 +1,8 @@
 import { getResenaById } from '../../../actions/resenas';
+
+import { getVendorDetails } from '../../../../lib/mockApi'; // Importo el mock para obtener detalles del vendedor
+
+
 import { Star, Truck, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -14,6 +18,9 @@ export default async function ViewPublicReviewPage({ params }: { params: { id_re
   if (!result.success || !result.resena) notFound();
 
   const resena = result.resena;
+
+  // Se obtienen los datos del vendedor usando el mock (que será reemplazado por un fetch en Etapa 3)
+  const vendor = await getVendorDetails(resena.id_vendedor);
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-24 pb-16 px-4">
@@ -38,6 +45,16 @@ export default async function ViewPublicReviewPage({ params }: { params: { id_re
             </div>
             <span className="text-sm text-slate-500 dark:text-slate-400">{resena.fecha.toLocaleDateString()}</span>
           </div>
+
+         {/* Información del Vendedor (consumo de la API externad) */}
+          {vendor && (
+            <div className="border-t border-slate-100 dark:border-slate-700 pt-6">
+              <h3 className="font-bold text-slate-700 dark:text-slate-300 mb-2">Vendedor</h3>
+              <p className="text-lg font-bold text-[#005BC1] dark:text-blue-400">{vendor.name}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{vendor.address}</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 italic mt-1">{vendor.description}</p>
+            </div>
+          )}
 
           <div className="space-y-2">
             <h3 className="font-bold text-slate-700 dark:text-slate-300">Calificación</h3>

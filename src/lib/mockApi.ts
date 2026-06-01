@@ -1,19 +1,25 @@
 // src/lib/mockApi.ts
 
-// Simulamos que llamamos a la API de la Seller App para obtener detalles del pedido
-export async function getExternalPedido(id_pedido: string) {
-  // Simulamos un delay de red
-  await new Promise((resolve) => setTimeout(resolve, 500));
+export interface Vendor {
+  id: string;
+  name: string;
+  description: string;
+  address: string;
+  image: string | null;
+  isActive: boolean;
+}
 
-  // Datos mockeados que simulan lo que nos devolvería la otra App
+export async function getVendorDetails(sellerId: string): Promise<Vendor | null> {
+  // Simulamos latencia de red para probar estados de carga
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  // Datos mockeados que cumplen con el contrato de mi compañero de SellerApp
   return {
-    id_pedido: id_pedido,
-    id_vendedor: "vend_789", // ID simulado
-    id_comprador: "user_clerk_1",
-    snapshot_producto_nombre: "Agua Mineral 20L Premium",
-    snapshot_producto_precio: 4500.0,
-    estado: "Entregado",
-    fecha: new Date(),
-    monto: 9000.0,
+    id: sellerId,
+    name: "AguaYa Provider Example",
+    description: "Distribuidor oficial de bidones premium",
+    address: "Av. Principal 123",
+    image: null,
+    isActive: true,
   };
 }
