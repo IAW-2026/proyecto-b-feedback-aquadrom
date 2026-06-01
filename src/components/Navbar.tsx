@@ -29,7 +29,7 @@ export default function Navbar() {
                 className="object-fill"
               />
                <span className="text-base sm:text-xl">
-                 AguaYa <span className="text-[#005BC1]">Feedback</span>
+                 AguaYa <span className="text-[#157cf2]">Feedback</span>
                </span>
             </Link>
           </div>
@@ -71,6 +71,9 @@ export default function Navbar() {
                 <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
                   <Link href="/admin" className="text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors font-body">
                     Panel Admin
+                  </Link>
+                  <Link href="/seller" className="text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors font-body">
+                    Panel Vendedor
                   </Link>
                   <UserButton />
                 </div>
