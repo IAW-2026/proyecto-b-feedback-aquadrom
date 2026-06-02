@@ -8,24 +8,24 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-lg border border-slate-100 overflow-hidden transition-all duration-200">
+    <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden transition-all duration-200">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center p-4 hover:bg-slate-50 transition-colors text-left"
+        className="w-full flex justify-between items-center p-4 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left"
       >
-        <span className="font-semibold text-slate-700 font-body">{question}</span>
+        <span className="font-semibold text-slate-900 dark:text-slate-200 font-body">{question}</span>
         <ChevronDown 
-          className={`text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+          className={`text-slate-400 dark:text-slate-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
         />
       </button>
       
       {/* Contenedor de la respuesta */}
       <div 
-        className={`px-4 pb-4 text-slate-600 font-body text-sm transition-all ${
+        className={`px-4 pb-4 text-slate-700 dark:text-slate-300 font-body text-sm transition-all ${
           isOpen ? 'block opacity-100' : 'hidden opacity-0'
         }`}
       >
-        <div className="pt-2 border-t border-slate-50">
+        <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
           {answer}
         </div>
       </div>
@@ -54,11 +54,11 @@ export default function FAQPage() {
     <div className="space-y-12 max-w-4xl mx-auto">
       {/* Hero Section */}
       <section className="mt-8 text-center">
-        <h1 className="font-headline text-3xl font-bold flex items-center justify-center gap-2 text-blue-500">
-          <HelpCircle className="text-primary w-8 h-8 text-blue-500" />
+        <h1 className="font-headline text-3xl font-bold flex items-center justify-center gap-2 text-blue-600 dark:text-blue-400">
+          <HelpCircle className="text-primary w-8 h-8" />
           Centro de Ayuda
         </h1>
-        <p className="text-slate-500 mt-2 font-body">Encontrá respuestas rápidas sobre nuestro servicio.</p>
+        <p className="text-slate-600 dark:text-slate-400 mt-2 font-body">Encontrá respuestas rápidas sobre nuestro servicio.</p>
       </section>
 
       {/* Secciones de FAQ */}
@@ -66,7 +66,7 @@ export default function FAQPage() {
         
         {/* Categoría: Pedidos */}
         <section className="space-y-4">
-          <h2 className="font-headline text-xl font-bold flex items-center gap-2 text-slate-800">
+          <h2 className="font-headline text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-slate-100">
             <Truck className="text-primary" />
             Pedidos y entregas
           </h2>
@@ -76,10 +76,10 @@ export default function FAQPage() {
             ))}
           </div>
         </section>
-
+        
         {/* Categoría: Pagos */}
         <section className="space-y-4">
-          <h2 className="font-headline text-xl font-bold flex items-center gap-2 text-slate-800">
+          <h2 className="font-headline text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-slate-100">
             <CreditCard className="text-primary" />
             Pagos y facturación
           </h2>
@@ -89,10 +89,10 @@ export default function FAQPage() {
             ))}
           </div>
         </section>
-
+        
         {/* Categoría: Reseñas */}
         <section className="space-y-4">
-          <h2 className="font-headline text-xl font-bold flex items-center gap-2 text-slate-800">
+          <h2 className="font-headline text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-slate-100">
             <Star className="text-primary" />
             Reseñas y Soporte
           </h2>
@@ -102,6 +102,7 @@ export default function FAQPage() {
             ))}
           </div>
         </section>
+
 
       </div>
     </div>
