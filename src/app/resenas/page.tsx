@@ -48,23 +48,44 @@ export default async function PublicResenasPage({
         </div>
         <p className="text-slate-600 dark:text-slate-300">Consulta las opiniones de los clientes sobre sus experiencias con los proveedores.</p>
         {/* Desplegable de Vendedores */}
-        <form action={handleFilter} className="flex gap-4 items-center bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+        <form action={handleFilter} className="flex flex-col sm:flex-row gap-4 items-start sm:items-center bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
           <label className="font-bold text-sm text-slate-600 dark:text-slate-300">Filtrar por Vendedor:</label>
-          <select 
-            name="sellerId" 
-            defaultValue={sellerId}
-            className="border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-lg px-4 py-2"
-          >
-            <option value="">Todos los vendedores</option>
-            {vendedoresList.map(v => (
-              <option key={v.id_vendedor} value={v.id_vendedor}>{v.id_vendedor}</option>
-            ))}
-          </select>
-          <button type="submit" className="bg-[#005BC1] text-white px-4 py-2 rounded-lg text-sm font-bold">Filtrar</button>
+          <div className="flex gap-2 w-full sm:w-auto">
+            <select 
+              name="sellerId" 
+              defaultValue={sellerId}
+              className="flex-1 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-lg px-4 py-2 text-sm"
+            >
+              <option value="">Todos los vendedores</option>
+              {vendedoresList.map(v => (
+                <option key={v.id_vendedor} value={v.id_vendedor}>{v.id_vendedor}</option>
+              ))}
+            </select>
+            <button type="submit" className="bg-[#005BC1] text-white px-4 py-2 rounded-lg text-sm font-bold">Filtrar</button>
+          </div>
         </form>
+        
+        {/* Vista Mobile (Cards) */}
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+          {resenas.map((r) => (
+            <div key={r.id_resena} className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-bold text-slate-900 dark:text-white">Pedido #{r.id_pedido}</span>
+                <span className="text-amber-500 font-bold">{r.estrellas} ★</span>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-300 italic">"{r.comentario}"</p>
+              <div className="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-700">
+                <span className="text-xs text-slate-500 dark:text-slate-400">{r.fecha.toLocaleDateString()}</span>
+                <Link href={`/resenas/view/${r.id_resena}`} className="text-[#005BC1] dark:text-blue-400 text-xs font-bold hover:underline">
+                  Ver detalle
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
 
-        {/* Tabla de Reseñas */}
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+        {/* Tabla de Reseñas (Desktop) */}
+        <div className="hidden md:block bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
@@ -94,6 +115,7 @@ export default async function PublicResenasPage({
             </table>
           </div>
         </div>
+
 
         {/* Paginación */}
         <div className="flex justify-between items-center mt-4">

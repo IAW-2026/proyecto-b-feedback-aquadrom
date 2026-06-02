@@ -42,20 +42,40 @@ export default async function AdminResenasPage({
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Moderación de Reseñas</h1>
         
         {/* Buscador */}
-        <form action="/admin/resenas" method="GET" className="flex gap-2">
+        <form action="/admin/resenas" method="GET" className="flex flex-col sm:flex-row gap-2">
           <input 
             name="q" 
             defaultValue={search} 
             placeholder="Buscar pedido..."
-            className="border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-[#005BC1] outline-none"
+            className="border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-[#005BC1] outline-none w-full sm:w-64"
           />
-          <button type="submit" className="bg-[#005BC1] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#004a9e] transition-colors">
+          <button type="submit" className="bg-[#005BC1] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#004a9e] transition-colors whitespace-nowrap">
             Buscar
           </button>
         </form>
       </div>
       
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+      {/* Vista Mobile (Cards) */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {resenas.map((resena) => (
+          <div key={resena.id_resena} className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Usuario: {resena.id_usuario}</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">Pedido #{resena.id_pedido}</p>
+              </div>
+              <span className="text-amber-500 font-bold">{resena.estrellas} ★</span>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-300 italic">"{resena.comentario}"</p>
+            <div className="flex justify-between items-center pt-3 border-t border-slate-100 dark:border-slate-700">
+              <span className="text-xs text-slate-400">{resena.fecha.toLocaleDateString()}</span>
+              <DeleteResenaButton id_resena={resena.id_resena} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden md:block bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
