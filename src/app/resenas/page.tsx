@@ -65,32 +65,34 @@ export default async function PublicResenasPage({
 
         {/* Tabla de Reseñas */}
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <table className="w-full text-left">
-            <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
-              <tr>
-                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Pedido</th>
-                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Estrellas</th>
-                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Comentario</th>
-                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Fecha</th>
-                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Acción</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-              {resenas.map((r) => (
-                <tr key={r.id_resena} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                  <td className="px-6 py-4 text-sm font-bold text-slate-700 dark:text-slate-300">#{r.id_pedido}</td>
-                  <td className="px-6 py-4 text-amber-500 font-bold">{r.estrellas} ★</td>
-                  <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{r.comentario}</td>
-                  <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">{r.fecha.toLocaleDateString()}</td>
-                  <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
-                    <Link href={`/resenas/view/${r.id_resena}`} className="text-[#005BC1] dark:text-blue-400 font-bold hover:underline">
-                      Ver detalle
-                    </Link>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+                <tr>
+                  <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Pedido</th>
+                  <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Estrellas</th>
+                  <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Comentario</th>
+                  <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Fecha</th>
+                  <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Acción</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+                {resenas.map((r) => (
+                  <tr key={r.id_resena} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                    <td className="px-6 py-4 text-sm font-bold text-slate-700 dark:text-slate-300">#{r.id_pedido}</td>
+                    <td className="px-6 py-4 text-amber-500 font-bold">{r.estrellas} ★</td>
+                    <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{r.comentario}</td>
+                    <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">{r.fecha.toLocaleDateString()}</td>
+                    <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
+                      <Link href={`/resenas/view/${r.id_resena}`} className="text-[#005BC1] dark:text-blue-400 font-bold hover:underline">
+                        Ver detalle
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Paginación */}
