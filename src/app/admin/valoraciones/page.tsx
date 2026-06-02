@@ -42,33 +42,55 @@ export default async function AdminValoracionesPage({
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Todas las Valoraciones</h1>
         
         {/* Filtro por Estrellas */}
-        <form action={handleFilter} className="flex gap-2">
+        <form action={handleFilter} className="flex flex-col sm:flex-row gap-2">
           <label htmlFor="estrellas-filter" className="sr-only">Filtrar por estrellas</label>
-          <select 
-            id="estrellas-filter"
-            name="estrellas" 
-            defaultValue={estrellas || ''}
-            className="border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-[#005BC1] outline-none"
-          >
-            <option value="">Todas las estrellas</option>
-            {[1, 2, 3, 4, 5].map(s => <option key={s} value={s}>{s} estrellas</option>)}
-          </select>
-          <button type="submit" className="bg-[#005BC1] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#004a9e] transition-colors">
-            Filtrar
-          </button>
+          <div className="flex gap-2 w-full sm:w-auto">
+            <select 
+              id="estrellas-filter"
+              name="estrellas" 
+              defaultValue={estrellas || ''}
+              className="flex-1 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-[#005BC1] outline-none"
+            >
+              <option value="">Todas las estrellas</option>
+              {[1, 2, 3, 4, 5].map(s => <option key={s} value={s}>{s} estrellas</option>)}
+            </select>
+            <button type="submit" className="bg-[#005BC1] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#004a9e] transition-colors whitespace-nowrap">
+              Filtrar
+            </button>
+          </div>
         </form>
       </div>
       
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-        <table className="w-full text-left">
-          <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
-            <tr>
-              <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Usuario</th>
-              <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Estrellas</th>
-              <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Comentario</th>
-              <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Fecha</th>
-            </tr>
-          </thead>
+      {/* Vista Mobile (Cards) */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {valoraciones.map((val) => (
+          <div key={val.id_valoracion} className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Usuario</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">{val.id_usuario}</p>
+              </div>
+              <span className="text-amber-500 font-bold">{val.estrellas} ★</span>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-300 italic">"{val.comentario}"</p>
+            <div className="flex justify-end items-center pt-3 border-t border-slate-100 dark:border-slate-700">
+              <span className="text-xs text-slate-400">{val.fecha.toLocaleDateString()}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden md:block bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+              <tr>
+                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Usuario</th>
+                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Estrellas</th>
+                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Comentario</th>
+                <th className="px-6 py-4 font-bold text-sm text-slate-600 dark:text-slate-300">Fecha</th>
+              </tr>
+            </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
               {valoraciones.map((val) => (
                 <tr key={val.id_valoracion} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
@@ -79,7 +101,8 @@ export default async function AdminValoracionesPage({
                 </tr>
               ))}
             </tbody>
-        </table>
+          </table>
+        </div>
       </div>
 
       {/* Paginación */}
