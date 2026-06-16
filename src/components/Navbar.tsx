@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { SignInButton, UserButton, Show } from '@clerk/nextjs';
+import { SignInButton, UserButton, Show, useUser } from '@clerk/nextjs';
 import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 import { useState } from 'react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, isLoaded } = useUser();
+  const role = user?.publicMetadata?.role;
 
   return (
     <nav className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-sm border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
@@ -69,12 +71,17 @@ export default function Navbar() {
               {/* Esto solo se ve si el usuario SÍ está logueado */}
               <Show when="signed-in">
                 <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-                  <Link href="/admin" className="text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors font-body">
-                    Panel Admin
-                  </Link>
-                  <Link href="/seller" className="text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors font-body">
-                    Panel Vendedor
-                  </Link>
+                  {role === 'admin' && (
+                    <Link href="/admin" className="text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors font-body">
+                      Panel Admin
+                    </Link>
+                  )}
+
+                  {role === 'seller' && (
+                    <Link href="/seller" className="text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors font-body">
+                      Panel Vendedor
+                    </Link>
+                  )}
                   <UserButton />
                 </div>
               </Show>
