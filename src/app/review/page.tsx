@@ -165,27 +165,44 @@ export default async function ResenasPage({
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">
               Historial de Entregas
             </h2>
-            <div className="space-y-4">
-              {processedOrders.map((order) => (
-                <OrderReviewCard key={order.id} {...order} />
-              ))}
-            </div>
+            
+            {processedOrders.length === 0 ? (
+              <div className="bg-white dark:bg-slate-800 p-12 rounded-3xl border border-slate-200 dark:border-slate-700 text-center space-y-4 shadow-sm">
+                <div className="w-20 h-20 bg-blue-50 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto text-[#005BC1]">
+                  <PackageCheck size={40} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Aún no tienes pedidos</h3>
+                <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                  Cuando realices tu primer pedido en la aplicación principal de AguaYa, aparecerá aquí para que puedas calificar el servicio.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="space-y-4">
+                  {processedOrders.map((order) => (
+                    <OrderReviewCard key={order.id} {...order} />
+                  ))}
+                </div>
 
-            <div className="pt-8 flex justify-center gap-4">
-              <Link 
-                href={`/review?page=${page - 1}`}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all ${page <= 1 ? 'pointer-events-none opacity-50' : ''}`}
-              >
-                Anterior
-              </Link>
-              <span className="flex items-center text-sm font-bold text-slate-700 dark:text-slate-300">Página {page} de {totalPages}</span>
-              <Link 
-                href={`/review?page=${page + 1}`}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all ${page >= totalPages ? 'pointer-events-none opacity-50' : ''}`}
-              >
-                Siguiente
-              </Link>
-            </div>
+                {totalPages > 1 && (
+                  <div className="pt-8 flex justify-center gap-4">
+                    <Link 
+                      href={`/review?page=${page - 1}`}
+                      className={`flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all ${page <= 1 ? 'pointer-events-none opacity-50' : ''}`}
+                    >
+                      Anterior
+                    </Link>
+                    <span className="flex items-center text-sm font-bold text-slate-700 dark:text-slate-300">Página {page} de {totalPages}</span>
+                    <Link 
+                      href={`/review?page=${page + 1}`}
+                      className={`flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all ${page >= totalPages ? 'pointer-events-none opacity-50' : ''}`}
+                    >
+                      Siguiente
+                    </Link>
+                  </div>
+                )}
+              </>
+            )}
           </section>
 
         </div>
