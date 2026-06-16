@@ -1,6 +1,7 @@
 import { prisma } from '../../../lib/prisma';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import ReviewCard from '../../../components/ReviewCard';
 
 export default async function AdminValoracionesPage({
   searchParams,
@@ -64,19 +65,14 @@ export default async function AdminValoracionesPage({
       {/* Vista Mobile (Cards) */}
       <div className="grid grid-cols-1 gap-4 md:hidden">
         {valoraciones.map((val) => (
-          <div key={val.id_valoracion} className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Usuario</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">{val.id_usuario}</p>
-              </div>
-              <span className="text-amber-500 font-bold">{val.estrellas} ★</span>
-            </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 italic">"{val.comentario}"</p>
-            <div className="flex justify-end items-center pt-3 border-t border-slate-100 dark:border-slate-700">
-              <span className="text-xs text-slate-400">{val.fecha.toLocaleDateString()}</span>
-            </div>
-          </div>
+          <ReviewCard 
+            key={val.id_valoracion}
+            idLabel="Usuario"
+            idValue={val.id_usuario}
+            stars={val.estrellas}
+            comment={val.comentario}
+            date={val.fecha.toLocaleDateString()}
+          />
         ))}
       </div>
 

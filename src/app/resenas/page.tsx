@@ -2,6 +2,7 @@ import { prisma } from '../../lib/prisma';
 import Link from 'next/link';
 import { handleFilter } from '../actions/resenaFilter';
 import { MessageSquareHeart } from 'lucide-react';
+import ReviewCard from '../../components/ReviewCard';
 
 
 export const revalidate = 0;
@@ -68,19 +69,19 @@ export default async function PublicResenasPage({
         {/* Vista Mobile (Cards) */}
         <div className="grid grid-cols-1 gap-4 md:hidden">
           {resenas.map((r) => (
-            <div key={r.id_resena} className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-bold text-slate-900 dark:text-white">Pedido #{r.id_pedido}</span>
-                <span className="text-amber-500 font-bold">{r.estrellas} ★</span>
-              </div>
-              <p className="text-sm text-slate-600 dark:text-slate-300 italic">"{r.comentario}"</p>
-              <div className="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-700">
-                <span className="text-xs text-slate-500 dark:text-slate-400">{r.fecha.toLocaleDateString()}</span>
+            <ReviewCard 
+              key={r.id_resena}
+              idLabel="Pedido"
+              idValue={`#${r.id_pedido}`}
+              stars={r.estrellas}
+              comment={r.comentario || ''}
+              date={r.fecha.toLocaleDateString()}
+              action={
                 <Link href={`/resenas/view/${r.id_resena}`} className="text-[#005BC1] dark:text-blue-400 text-xs font-bold hover:underline">
                   Ver detalle
                 </Link>
-              </div>
-            </div>
+              }
+            />
           ))}
         </div>
 

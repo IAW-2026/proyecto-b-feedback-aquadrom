@@ -1,6 +1,7 @@
 import { prisma } from '../../../lib/prisma';
 import DeleteResenaButton from '../../../components/DeleteResenaButton';
 import Link from 'next/link';
+import ReviewCard from '../../../components/ReviewCard';
 
 export default async function AdminResenasPage({
   searchParams,
@@ -58,20 +59,16 @@ export default async function AdminResenasPage({
       {/* Vista Mobile (Cards) */}
       <div className="grid grid-cols-1 gap-4 md:hidden">
         {resenas.map((resena) => (
-          <div key={resena.id_resena} className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Usuario: {resena.id_usuario}</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Pedido #{resena.id_pedido}</p>
-              </div>
-              <span className="text-amber-500 font-bold">{resena.estrellas} ★</span>
-            </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 italic">"{resena.comentario}"</p>
-            <div className="flex justify-between items-center pt-3 border-t border-slate-100 dark:border-slate-700">
-              <span className="text-xs text-slate-400">{resena.fecha.toLocaleDateString()}</span>
-              <DeleteResenaButton id_resena={resena.id_resena} />
-            </div>
-          </div>
+          <ReviewCard 
+            key={resena.id_resena}
+            idLabel="Usuario"
+            idValue={resena.id_usuario}
+            subtitle={`Pedido #${resena.id_pedido}`}
+            stars={resena.estrellas}
+            comment={resena.comentario || ''}
+            date={resena.fecha.toLocaleDateString()}
+            action={<DeleteResenaButton id_resena={resena.id_resena} />}
+          />
         ))}
       </div>
 
