@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { handleFilter } from '../actions/resenaFilter';
 import { MessageSquareHeart } from 'lucide-react';
 import ReviewCard from '../../components/ReviewCard';
+import Pagination from '../../components/Pagination';
 
 
 export const revalidate = 0;
@@ -118,12 +119,7 @@ export default async function PublicResenasPage({
         </div>
 
 
-        {/* Paginación */}
-        <div className="flex justify-between items-center mt-4">
-          <Link href={`/resenas?page=${page - 1}&sellerId=${sellerId}`} className={`px-4 py-2 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm font-medium ${page <= 1 ? 'pointer-events-none opacity-50' : ''}`}>Anterior</Link>
-          <span className="text-sm dark:text-white">Página {page} de {totalPages || 1}</span>
-          <Link href={`/resenas?page=${page + 1}&sellerId=${sellerId}`} className={`px-4 py-2 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm font-medium ${page >= totalPages ? 'pointer-events-none opacity-50' : ''}`}>Siguiente</Link>
-        </div>
+        <Pagination page={page} totalPages={totalPages} buildHref={(p) => `/resenas?page=${p}&sellerId=${sellerId}`} />
       </div>
     </main>
   );

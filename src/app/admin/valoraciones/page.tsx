@@ -1,7 +1,7 @@
 import { prisma } from '../../../lib/prisma';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ReviewCard from '../../../components/ReviewCard';
+import Pagination from '../../../components/Pagination';
 
 export default async function AdminValoracionesPage({
   searchParams,
@@ -101,22 +101,7 @@ export default async function AdminValoracionesPage({
         </div>
       </div>
 
-      {/* Paginación */}
-       <div className="flex justify-between items-center mt-4">
-         <Link 
-           href={`/admin/valoraciones?page=${page - 1}&estrellas=${estrellas || ''}`}
-           className={`px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-900 dark:text-slate-100 ${page <= 1 ? 'pointer-events-none opacity-50' : 'hover:bg-slate-50 dark:hover:bg-slate-700'}`}
-         >
-           Anterior
-         </Link>
-         <span className="text-sm font-bold text-slate-900 dark:text-slate-100">Página {page} de {totalPages || 1}</span>
-         <Link 
-           href={`/admin/valoraciones?page=${page + 1}&estrellas=${estrellas || ''}`}
-           className={`px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-900 dark:text-slate-100 ${page >= totalPages ? 'pointer-events-none opacity-50' : 'hover:bg-slate-50 dark:hover:bg-slate-700'}`}
-         >
-           Siguiente
-         </Link>
-       </div>
+      <Pagination page={page} totalPages={totalPages} buildHref={(p) => `/admin/valoraciones?page=${p}&estrellas=${estrellas || ''}`} />
     </div>
   );
 }
