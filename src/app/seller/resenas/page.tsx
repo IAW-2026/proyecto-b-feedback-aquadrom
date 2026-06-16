@@ -1,5 +1,5 @@
 import { getSellerResenas } from '../../actions/seller';
-import Link from 'next/link';
+import ImageLightbox from '../../../components/ImageLightbox';
 
 export default async function SellerResenasPage() {
   const result = await getSellerResenas();
@@ -68,6 +68,7 @@ export default async function SellerResenasPage() {
                     year: 'numeric' 
                   })}
                 </span>
+                <ImageLightbox foto={resena.foto} />
               </div>
             </div>
           ))}
