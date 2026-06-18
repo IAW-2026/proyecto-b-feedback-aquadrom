@@ -5,25 +5,31 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ sellerId: string }> }
 ) {
-  // Await params para obtener el sellerId
+  const apiKey = request.headers.get('x-api-key');
+  const expectedKey = process.env.SELLER_API_KEY;
+
+  if (expectedKey && apiKey !== expectedKey) {
+    return NextResponse.json(
+      { error: 'No autorizado' },
+      { status: 401 }
+    );
+  }
+
   const { sellerId } = await params;
 
   try {
-    // 1. Obtener las últimas 5 reseñas
     const resenas = await prisma.resena.findMany({
       where: { id_vendedor: sellerId },
       orderBy: { fecha: 'desc' },
       take: 5,
     });
 
-    // 2. Calcular promedio y total
     const stats = await prisma.resena.aggregate({
       where: { id_vendedor: sellerId },
       _avg: { estrellas: true },
       _count: { id_resena: true },
     });
 
-    // 3. Responder
     return NextResponse.json({
       promedio: stats._avg.estrellas ? parseFloat(stats._avg.estrellas.toFixed(1)) : 0,
       total: stats._count.id_resena || 0,
