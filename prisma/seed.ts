@@ -18,9 +18,17 @@ async function main() {
   const buyers = ['user_clerk_1', 'user_clerk_2', 'user_clerk_3'];
 
   // 2. Generar 100 pedidos
+  const sellers = [
+    'cmpvp75rp0000ugliqx0ksd22', // agua2
+    'cmpurfqxv0000cslii6aablh3', // agusCondori
+    'cmpvxr5er000004l51nrtqen5', // Test Vendedor 1
+    'cmpvzfw5c000004jscdsssg2x', // Industrias Alamo
+    'cmpx4ofsg000004kwilyw1gab', // Agua Pura
+  ];
+
   const pedidos = Array.from({ length: 100 }).map((_, i) => ({
     id_pedido: `PED-${1000 + i}`,
-    id_vendedor: `VEND-${Math.floor(Math.random() * 5) + 1}`,
+    id_vendedor: sellers[Math.floor(Math.random() * sellers.length)],
     id_comprador: buyers[i % 3], // Cicla entre los 3 usuarios
     snapshot_producto_nombre: `Bidón Premium ${i + 1}`,
     snapshot_producto_precio: 4000 + (i * 10),

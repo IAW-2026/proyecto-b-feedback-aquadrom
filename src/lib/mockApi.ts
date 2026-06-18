@@ -24,9 +24,9 @@ export async function getVendorDetails(sellerId: string): Promise<Vendor | null>
     if (!res.ok) return null;
 
     const json = await res.json();
-    if (!json.success || !json.vendors?.length) return null;
+    if (!json.success) return null;
 
-    return json.vendors[0] as Vendor;
+    return (json.vendor || json.vendors?.[0]) as Vendor | null;
   } catch {
     return null;
   }
