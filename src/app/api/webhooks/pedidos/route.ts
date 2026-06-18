@@ -3,9 +3,18 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
+    const apiKey = req.headers.get('x-api-key');
+    const expectedKey = process.env.WEBHOOK_API_KEY;
+
+    if (expectedKey && apiKey !== expectedKey) {
+      return NextResponse.json(
+        { error: 'No autorizado' },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     
-    // Validación básica de los datos requeridos
     if (!body.id_pedido || !body.id_vendedor || !body.id_comprador) {
       return NextResponse.json(
         { error: 'Faltan campos obligatorios' },
@@ -13,7 +22,6 @@ export async function POST(req: Request) {
       );
     }
     
-    // Guardamos el pedido en nuestra DB local para poder mostrarlo en /review
     const pedido = await prisma.pedido.create({
       data: {
         id_pedido: body.id_pedido,
@@ -30,7 +38,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, pedido }, { status: 201 });
   } catch (error: any) {
     console.error('Error al procesar el pedido:', error);
-    // Manejo de error si el ID ya existe (P2002)
     if (error.code === 'P2002') {
       return NextResponse.json({ error: 'El pedido ya existe' }, { status: 409 });
     }
