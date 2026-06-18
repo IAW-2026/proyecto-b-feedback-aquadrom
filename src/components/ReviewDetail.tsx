@@ -13,7 +13,7 @@ export interface ReviewData {
 export interface VendorInfo {
   name: string;
   address: string;
-  description: string;
+  description: string | null;
 }
 
 interface ReviewDetailProps {
