@@ -7,6 +7,7 @@ import { getPedidoById } from '../../actions/pedidos';
 import { useRouter, useParams } from 'next/navigation';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
+import AlertModal from '../../../components/AlertModal';
 
 // Sub-componente para las etiquetas rápidas
 function QuickTag({ label, isActive, onClick }: { label: string, isActive: boolean, onClick: () => void }) {
@@ -60,6 +61,9 @@ export default function CreateReviewPage() {
   const [comment, setComment] = useState('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState<{ open: boolean; title: string; message: string; variant: 'success' | 'error' }>({
+    open: false, title: '', message: '', variant: 'success',
+  });
 
   // 2. Cargar pedido
   useEffect(() => {
@@ -85,13 +89,12 @@ export default function CreateReviewPage() {
       });
 
       if (result.success) {
-        alert('¡Reseña enviada con éxito!');
-        router.push('/review');
+        setAlert({ open: true, title: 'Reseña enviada', message: '¡Reseña enviada con éxito!', variant: 'success' });
       } else {
-        alert('Error: ' + result.error);
+        setAlert({ open: true, title: 'Error', message: 'Error: ' + result.error, variant: 'error' });
       }
     } catch (error) {
-      alert('Error inesperado al enviar la reseña');
+      setAlert({ open: true, title: 'Error', message: 'Error inesperado al enviar la reseña', variant: 'error' });
     } finally {
       setIsLoading(false);
     }
@@ -101,6 +104,16 @@ export default function CreateReviewPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 pt-24 pb-16 px-4">
+      <AlertModal
+        open={alert.open}
+        title={alert.title}
+        message={alert.message}
+        variant={alert.variant}
+        onClose={() => {
+          setAlert({ ...alert, open: false });
+          if (alert.variant === 'success') router.push('/review');
+        }}
+      />
       <div className="max-w-180 mx-auto space-y-10">
         
         {/* Encabezado de Contexto */}

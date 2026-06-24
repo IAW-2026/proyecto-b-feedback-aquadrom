@@ -13,6 +13,7 @@ import {
   Lightbulb 
 } from 'lucide-react';
 import { createValoracion } from '../actions/valoraciones';
+import AlertModal from '../../components/AlertModal';
 
 // Sub-componente para las etiquetas de logística
 function FeedbackChip({ label, icon: Icon, active, onClick }: any) {
@@ -37,6 +38,9 @@ export default function ValoranosPage() {
   const [hoverRating, setHoverRating] = useState(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [comment, setComment] = useState('');
+  const [alert, setAlert] = useState<{ open: boolean; title: string; message: string; variant: 'success' | 'error' | 'info' }>({
+    open: false, title: '', message: '', variant: 'info',
+  });
 
   const tags = [
     { id: 'interfaz', label: 'Interfaz (UI)', icon: Monitor }, 
@@ -54,7 +58,7 @@ export default function ValoranosPage() {
 
   const handleSave = async () => {
   if (rating === 0) {
-    alert('Por favor selecciona una calificación');
+    setAlert({ open: true, title: 'Calificación requerida', message: 'Por favor selecciona una calificación', variant: 'info' });
     return;
   }
 
@@ -68,20 +72,27 @@ export default function ValoranosPage() {
       throw new Error(result.error || 'Error al guardar la valoración');
     }
 
-    alert('Valoración guardada con éxito');
+    setAlert({ open: true, title: 'Valoración enviada', message: 'Valoración guardada con éxito', variant: 'success' });
     setRating(0);
     setComment('');
     setSelectedTags([]);
   } catch (error) {
     console.error(error);
-    alert('No se pudo guardar la valoración: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+    setAlert({ open: true, title: 'Error', message: 'No se pudo guardar la valoración: ' + (error instanceof Error ? error.message : 'Error desconocido'), variant: 'error' });
   }
 };
 
   return (
     <main className="min-h-screen bg-[#E3F2FD]/30 pt-24 pb-12 px-4 rounded-lg">
 
-      <div className="max-w-4xl mx-auto space-y-8">
+        <AlertModal
+          open={alert.open}
+          title={alert.title}
+          message={alert.message}
+          variant={alert.variant}
+          onClose={() => setAlert({ ...alert, open: false })}
+        />
+        <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Hero Section */}
         <section className="bg-white rounded-2xl shadow-sm border border-[#E3F2FD] p-8 md:p-12 overflow-hidden relative">
