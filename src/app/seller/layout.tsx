@@ -13,9 +13,13 @@ export default async function SellerLayout({
   }
 
   const publicMetadata = (user as any)?.publicMetadata ?? {};
-  const role = publicMetadata.role;
+  const roles: string[] = Array.isArray(publicMetadata.roles)
+    ? publicMetadata.roles
+    : publicMetadata.role
+      ? [publicMetadata.role]
+      : [];
 
-  if (role !== 'seller') {
+  if (!roles.includes('seller')) {
     redirect('/');
   }
 

@@ -14,14 +14,14 @@ export default async function AdminLayout({
     redirect('/');
   }
 
-  // Leer rol desde la metadata pública de Clerk (flexible: 'role' o 'roles')
   const publicMetadata = (user as any)?.publicMetadata ?? {};
-  let userRoles: string[] = [];
-  if (Array.isArray(publicMetadata.roles)) userRoles = publicMetadata.roles;
-  else if (typeof publicMetadata.roles === 'string') userRoles = [publicMetadata.roles];
-  else if (publicMetadata.role) userRoles = [publicMetadata.role];
+  const roles: string[] = Array.isArray(publicMetadata.roles)
+    ? publicMetadata.roles
+    : publicMetadata.role
+      ? [publicMetadata.role]
+      : [];
 
-  const isAdmin = userRoles.includes('admin');
+  const isAdmin = roles.includes('admin');
   if (!isAdmin) {
     // Usuario autenticado pero no admin -> redirigir
     redirect('/');
