@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       data: {
         id_pedido: order.order_id,
         id_vendedor: order.vendor_id,
-        id_comprador: order.buyer_id,
+        id_comprador: order.buyer_user_id,
         snapshot_producto_nombre: nombreProductos,
         snapshot_producto_precio: order.total,
         estado: order.status,
