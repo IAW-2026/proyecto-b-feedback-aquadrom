@@ -2,14 +2,16 @@
 
 import { prisma } from '../../lib/prisma';
 import { auth } from '@clerk/nextjs/server';
+import { getSellerIdByUserId } from '../../lib/mockApi';
 
 export async function getSellerStats() {
-  const { sessionClaims } = await auth();
-  const sellerId = (sessionClaims?.metadata as any)?.sellerId;
+  const { userId } = await auth();
 
-  if (!sellerId) {
-    throw new Error('No sellerId found in metadata');
+  if (!userId) {
+    throw new Error('Usuario no autenticado');
   }
+
+  const sellerId = await getSellerIdByUserId(userId) ?? userId;
 
   try {
     const resenas = await prisma.resena.findMany({
@@ -34,12 +36,13 @@ export async function getSellerStats() {
 }
 
 export async function getSellerResenas() {
-  const { sessionClaims } = await auth();
-  const sellerId = (sessionClaims?.metadata as any)?.sellerId;
+  const { userId } = await auth();
 
-  if (!sellerId) {
-    throw new Error('No sellerId found in metadata');
+  if (!userId) {
+    throw new Error('Usuario no autenticado');
   }
+
+  const sellerId = await getSellerIdByUserId(userId) ?? userId;
 
   try {
     const resenas = await prisma.resena.findMany({
