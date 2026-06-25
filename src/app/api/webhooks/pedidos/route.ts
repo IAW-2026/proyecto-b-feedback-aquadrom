@@ -7,32 +7,59 @@ export async function POST(req: Request) {
     const expectedKey = process.env.WEBHOOK_API_KEY;
 
     if (expectedKey && apiKey !== expectedKey) {
-      return NextResponse.json(
-        { error: 'No autorizado' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 
     const body = await req.json();
-    
-    if (!body.id_pedido || !body.id_vendedor || !body.id_comprador) {
+
+    if (!body.id_pedido) {
       return NextResponse.json(
-        { error: 'Faltan campos obligatorios' },
+        { error: 'Falta id_pedido' },
         { status: 400 }
       );
     }
-    
+
+    const buyerUrl = process.env.BUYER_API_URL;
+    const buyerKey = process.env.BUYER_API_KEY;
+
+    if (!buyerUrl || !buyerKey) {
+      return NextResponse.json({ error: 'Error de configuración del servidor' }, { status: 500 });
+    }
+
+    const res = await fetch(`${buyerUrl}/api/orders/${body.id_pedido}`, {
+      headers: { 'x-api-key': buyerKey },
+    });
+
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: 'Error al obtener el pedido desde Buyer App' },
+        { status: 502 }
+      );
+    }
+
+    const json = await res.json();
+    const order = json.order;
+
+    if (!order) {
+      return NextResponse.json({ error: 'Pedido no encontrado en Buyer App' }, { status: 404 });
+    }
+
+    const nombreProductos = order.items
+      ?.map((item: any) => item.name)
+      .filter(Boolean)
+      .join(', ') || '';
+
     const pedido = await prisma.pedido.create({
       data: {
-        id_pedido: body.id_pedido,
-        id_vendedor: body.id_vendedor,
-        id_comprador: body.id_comprador,
-        snapshot_producto_nombre: body.snapshot_producto_nombre,
-        snapshot_producto_precio: parseFloat(body.snapshot_producto_precio),
-        estado: body.estado,
-        fecha: body.fecha ? new Date(body.fecha) : new Date(),
-        monto: parseFloat(body.monto),
-      }
+        id_pedido: order.order_id,
+        id_vendedor: order.vendor_id,
+        id_comprador: order.buyer_id,
+        snapshot_producto_nombre: nombreProductos,
+        snapshot_producto_precio: order.total,
+        estado: order.status,
+        fecha: new Date(order.created_at),
+        monto: order.total,
+      },
     });
 
     return NextResponse.json({ success: true, pedido }, { status: 201 });
