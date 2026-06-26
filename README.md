@@ -5,7 +5,7 @@ https://proyecto-b-feedback-aquadrom.vercel.app/
 
 👥 Usuarios de Prueba  
 Usuario buyer:  
-    -email: buyerfb+clerk\_test@iaw.com  
+    -email: buyer+clerk\_test@iaw.com  
     -contraseña: iawuser\#
 
 Usuario seller:  
